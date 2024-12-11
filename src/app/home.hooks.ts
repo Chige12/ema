@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export const useForm = (fetchComments: () => void) => {
+export const useForm = (fetchEmaList: () => void) => {
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ export const useForm = (fetchComments: () => void) => {
       if (result.success) {
         setName('');
         setComment('');
-        fetchComments(); // 更新されたコメント一覧を取得
+        fetchEmaList(); // 更新された絵馬一覧を取得
       } else {
         console.error('Failed to submit comment');
       }
@@ -42,29 +42,29 @@ export const useForm = (fetchComments: () => void) => {
   };
 };
 
-export const useComments = () => {
-  const [comments, setComments] = useState([]);
-  // コメント一覧を取得
-  const fetchComments = async () => {
+export const useEmaList = () => {
+  const [emaList, setEmaList] = useState([]);
+  // 絵馬一覧を取得
+  const fetchEmaList = async () => {
     try {
       const response = await fetch('/api/fetch-data');
       const data = await response.json();
       if (data.success) {
-        setComments(data.data || []);
+        setEmaList(data.data || []);
       } else {
-        console.error('Failed to fetch comments');
+        console.error('Failed to fetch emaList');
       }
     } catch (error) {
-      console.error('Error fetching comments:', error);
+      console.error('Error fetching emaList:', error);
     }
   };
 
   useEffect(() => {
-    fetchComments();
+    fetchEmaList();
   }, []);
 
   return {
-    comments,
-    fetchComments,
+    emaList,
+    fetchEmaList,
   };
 };
