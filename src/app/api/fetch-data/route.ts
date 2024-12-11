@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { fetchDataFromGAS } from '@/lib/gas';
+import { NextRequest, NextResponse } from "next/server";
+import { fetchDataFromGAS } from "@/lib/gas";
 
 export async function GET(request: NextRequest) {
   try {
@@ -18,9 +18,12 @@ export async function GET(request: NextRequest) {
     // データをJSON形式でレスポンス
     return NextResponse.json({ success: true, data: data.items });
   } catch (error) {
-    console.error('Error fetching data from GAS:', error);
+    const errorText = `Error fetching data from GAS: ${
+      error instanceof Error ? error.message : "Unknown error"
+    }`;
+    console.error(errorText);
     return NextResponse.json(
-      { success: false, error: (error as Error).message },
+      { success: false, error: errorText },
       { status: 500 }
     );
   }

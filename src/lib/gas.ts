@@ -28,13 +28,14 @@ export async function postDataToGAS(data: { name: string; comment: string }) {
     }
     return result;
   } catch (error) {
-    throw new Error(
-      `Failed to parse response as JSON: ${(error as any).message}`
-    );
+    const errorText = `Failed to parse response as JSON: ${
+      error instanceof Error ? error.message : "Unknown error"
+    }`;
+    throw new Error(errorText);
   }
 }
 
-export async function fetchDataFromGAS(params: Record<string, any>) {
+export async function fetchDataFromGAS(params: Record<string, unknown>) {
   const gasEndpoint = process.env.GAS_ENDPOINT_URL;
 
   if (!gasEndpoint) {
@@ -45,7 +46,7 @@ export async function fetchDataFromGAS(params: Record<string, any>) {
 
   // クエリパラメータを設定（必要に応じて）
   Object.entries(params).forEach(([key, value]) => {
-    url.searchParams.append(key, value.toString());
+    url.searchParams.append(key, String(value));
   });
 
   // GASへのGETリクエスト

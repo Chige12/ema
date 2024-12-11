@@ -10,9 +10,12 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, result });
   } catch (error) {
-    console.error('Error submitting data to GAS:', error);
+    const errorText = `Error submitting data to GAS: ${
+      error instanceof Error ? error.message : "Unknown error"
+    }`;
+    console.error(errorText);
     return NextResponse.json(
-      { success: false, error: (error as Error).message },
+      { success: false, error: errorText },
       { status: 500 }
     );
   }
