@@ -1,58 +1,11 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useComments, useForm } from './home.hooks';
 
 export default function Home() {
-  const [comments, setComments] = useState([]);
-  const [name, setName] = useState('');
-  const [comment, setComment] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  // コメント一覧を取得
-  const fetchComments = async () => {
-    try {
-      const response = await fetch('/api/fetch-data');
-      const data = await response.json();
-      if (data.success) {
-        setComments(data.data || []);
-      } else {
-        console.error('Failed to fetch comments');
-      }
-    } catch (error) {
-      console.error('Error fetching comments:', error);
-    }
-  };
-
-  // フォーム送信
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const response = await fetch('/api/submit-form', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, comment }),
-      });
-
-      const result = await response.json();
-      if (result.success) {
-        setName('');
-        setComment('');
-        fetchComments(); // 更新されたコメント一覧を取得
-      } else {
-        console.error('Failed to submit comment');
-      }
-    } catch (error) {
-      console.error('Error submitting comment:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchComments();
-  }, []);
+  const { fetchComments, comments } = useComments();
+  const { name, setName, comment, setComment, loading, handleSubmit } = useForm(fetchComments);
 
   return (
     <main className="min-h-screen bg-gray-100 p-6">
