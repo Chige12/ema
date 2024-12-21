@@ -1,6 +1,18 @@
 import React, { useEffect, useState } from 'react';
 
-export const useForm = (fetchEmaList: () => void) => {
+const generateBase64Image = (
+  canvasRef: React.RefObject<HTMLCanvasElement | null>,
+) => {
+  const canvas = canvasRef.current;
+  if (!canvas) throw new Error('Canvas is not defined');
+  const base64Image = canvas.toDataURL('image/png');
+  return base64Image;
+};
+
+export const useForm = (
+  fetchEmaList: () => void,
+  canvasRef: React.RefObject<HTMLCanvasElement | null>,
+) => {
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
   const [loading, setLoading] = useState(false);
@@ -11,10 +23,12 @@ export const useForm = (fetchEmaList: () => void) => {
     setLoading(true);
 
     try {
+      const base64 = generateBase64Image(canvasRef);
+
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, comment }),
+        body: JSON.stringify({ name, comment, base64 }),
       });
 
       const result = await response.json();

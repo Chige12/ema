@@ -3,12 +3,17 @@
 import React from 'react';
 import { EmaList } from '@/components/EmaList';
 import { Form } from '@/components/Form';
+import { Preview } from '@/components/Preview';
 import { useEmaList, useForm } from './home.hooks';
 
 export default function Home() {
+  const canvasRef = React.useRef<HTMLCanvasElement>(null);
+
   const { fetchEmaList, emaList } = useEmaList();
-  const { name, setName, comment, setComment, loading, handleSubmit } =
-    useForm(fetchEmaList);
+  const { name, setName, comment, setComment, loading, handleSubmit } = useForm(
+    fetchEmaList,
+    canvasRef,
+  );
 
   return (
     <main className="min-h-screen bg-gray-100 p-6">
@@ -16,6 +21,7 @@ export default function Home() {
         <h1 className="text-2xl font-bold text-gray-800 mb-4">
           コメントフォーム
         </h1>
+        <Preview name={name} comment={comment} canvasRef={canvasRef} />
         <Form
           name={name}
           comment={comment}
