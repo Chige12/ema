@@ -1,6 +1,7 @@
 import {
   CENTER,
   DEFAULT_COMMENT,
+  DEFAULT_KANJI,
   DEFAULT_NAME,
   INNER_SIZE,
   LEFT,
@@ -60,6 +61,7 @@ const drawText = (
   ctx: CanvasRenderingContext2D,
   name: string,
   comment: string,
+  kanji: string,
 ) => {
   ctx.fillStyle = 'white';
 
@@ -84,7 +86,7 @@ const drawText = (
   // Kanji 1 word
   ctx.textAlign = 'left';
   ctx.font = `230px ${sawarabiMincho.style.fontFamily.split(',')[0]}`;
-  ctx.fillText('絵', LEFT, 785);
+  ctx.fillText(kanji, LEFT, 785);
 
   // Name
   ctx.font = `38px ${hinaMincho.style.fontFamily.split(',')[0]}`;
@@ -131,12 +133,15 @@ const wrapText = (
 const fillText = (
   name: string,
   comment: string,
-): { fillName: string; fillComment: string } => {
+  kanji: string,
+): { fillName: string; fillComment: string, fillKanji: string } => {
   let fillName = name,
-    fillComment = comment;
+    fillComment = comment,
+    fillKanji = kanji;
   if (!name) fillName = DEFAULT_NAME;
   if (!comment) fillComment = DEFAULT_COMMENT;
-  return { fillName, fillComment };
+  if (!kanji) fillKanji = DEFAULT_KANJI;
+  return { fillName, fillComment, fillKanji};
 };
 
 export const generateStripesEma = async (
@@ -144,12 +149,13 @@ export const generateStripesEma = async (
   ctx: CanvasRenderingContext2D,
   name: string,
   comment: string,
+  kanji: string,
 ) => {
-  const { fillName, fillComment } = fillText(name, comment);
+  const { fillName, fillComment, fillKanji } = fillText(name, comment, kanji);
 
   clearCanvas(ctx, canvas);
   drawBackground(ctx, canvas);
   drawImages(ctx, canvas, () => {
-    drawText(ctx, fillName, fillComment);
+    drawText(ctx, fillName, fillComment, fillKanji);
   });
 };

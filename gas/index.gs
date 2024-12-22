@@ -11,7 +11,7 @@ function createData(sheet, timestamp, data) {
     throw new Error("Missing required fields: name or comment");
   }
 
-  sheet.appendRow([data.name, data.comment, timestamp, data.base64]);
+  sheet.appendRow([data.name, data.comment, data.kanji, timestamp, data.base64]);
   return ContentService.createTextOutput(
     JSON.stringify({ success: true })
   ).setMimeType(ContentService.MimeType.JSON);
@@ -26,6 +26,7 @@ function readData(sheet) {
   const data = rows.map((row) => ({
     name: row[0], // 1列目: 名前
     comment: row[1], // 2列目: コメント
+    kanji: row[4], // 5行目: 漢字
     timestamp: row[2], // 3行目: タイムスタンプ
     base64: row[3], // 4行目: 画像データ
   }));

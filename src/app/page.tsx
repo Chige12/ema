@@ -10,7 +10,7 @@ export default function Home() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   const { fetchEmaList, emaList } = useEmaList();
-  const { name, setName, comment, setComment, loading, handleSubmit } = useForm(
+  const { name, comment, kanji, setName, setComment, setKanji, loading, handleSubmit } = useForm(
     fetchEmaList,
     canvasRef,
   );
@@ -21,12 +21,14 @@ export default function Home() {
         <h1 className="text-2xl font-bold text-gray-800 mb-4">
           コメントフォーム
         </h1>
-        <Preview name={name} comment={comment} canvasRef={canvasRef} />
+        <Preview name={name} comment={comment} kanji={kanji} canvasRef={canvasRef} />
         <Form
           name={name}
           comment={comment}
+          kanji={kanji}
           setName={setName}
           setComment={setComment}
+          setKanji={setKanji}
           loading={loading}
           handleSubmit={handleSubmit}
         />

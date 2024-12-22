@@ -12,3 +12,4 @@ export const INNER_SIZE = CANVAS_SIZE - PADDING * 2;
 export const DEFAULT_NAME = 'Ema';
 export const DEFAULT_COMMENT =
   '沢山の絵が上手な人と出会って、\n絵がめちゃくちゃ上手になる\n１年になりますように。';
+export const DEFAULT_KANJI = '絵';

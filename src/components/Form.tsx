@@ -1,10 +1,13 @@
+import { DEFAULT_COMMENT, DEFAULT_KANJI, DEFAULT_NAME } from '@/lib/generateEma/constants';
 import React from 'react';
 
 type Props = {
   name: string;
   comment: string;
+  kanji: string;
   setName: (name: string) => void;
   setComment: (comment: string) => void;
+  setKanji: (kanji: string) => void
   loading: boolean;
   handleSubmit: (e: React.FormEvent) => void;
 };
@@ -12,8 +15,10 @@ type Props = {
 const Form = ({
   name,
   comment,
+  kanji,
   setName,
   setComment,
+  setKanji,
   loading,
   handleSubmit,
 }: Props) => {
@@ -24,7 +29,7 @@ const Form = ({
           htmlFor="name"
           className="block text-sm font-medium text-gray-700"
         >
-          氏名
+          なまえ *
         </label>
         <input
           type="text"
@@ -32,7 +37,7 @@ const Form = ({
           value={name}
           onChange={(e) => setName(e.target.value)}
           className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-          placeholder="お名前を入力してください"
+          placeholder={DEFAULT_NAME}
           required
         />
       </div>
@@ -41,15 +46,30 @@ const Form = ({
           htmlFor="comment"
           className="block text-sm font-medium text-gray-700"
         >
-          コメント
+          ねがいごと *
         </label>
         <textarea
           id="comment"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           className="mt-1 p-2 border border-gray-300 rounded-md w-full"
-          placeholder="コメントを入力してください"
+          placeholder={DEFAULT_COMMENT}
           required
+        />
+      </div>
+      <div className="mb-4">
+        <label
+          htmlFor="kanji"
+          className="block text-sm font-medium text-gray-700"
+        >
+          2025年 わたしの漢字（1文字）
+        </label>
+        <input
+          id="kanji"
+          value={kanji}
+          onChange={(e) => setKanji(e.target.value)}
+          className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+          placeholder={DEFAULT_KANJI}
         />
       </div>
       <button

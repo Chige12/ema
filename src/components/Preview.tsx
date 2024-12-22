@@ -1,13 +1,14 @@
-import React, { RefObject, use, useEffect } from 'react';
+import React, { RefObject, useEffect } from 'react';
 import { generateStripesEma } from '@/lib/generateEma/stripes';
 
 type Props = {
   name: string;
   comment: string;
+  kanji: string;
   canvasRef: RefObject<HTMLCanvasElement | null>;
 };
 
-const Preview = ({ name, comment, canvasRef }: Props) => {
+const Preview = ({ name, comment, kanji, canvasRef }: Props) => {
 
   const loadFontsAndGenerateImage = async () => {
     await document.fonts.ready;
@@ -15,12 +16,12 @@ const Preview = ({ name, comment, canvasRef }: Props) => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    await generateStripesEma(canvas, ctx, name, comment);
+    await generateStripesEma(canvas, ctx, name, comment, kanji);
   };
 
   useEffect(() => {
     loadFontsAndGenerateImage();
-  }, [name, comment, canvasRef]);
+  }, [name, comment, kanji, canvasRef]);
 
   return (
     <div className="flex justify-center items-center mx-18">
