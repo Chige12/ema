@@ -11,6 +11,7 @@ const generateBase64Image = (
 
 export const useForm = (
   fetchEmaList: () => void,
+  setSavedImage: React.Dispatch<React.SetStateAction<string | null>>,
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
 ) => {
   const [name, setName] = useState('');
@@ -34,6 +35,7 @@ export const useForm = (
 
       const result = await response.json();
       if (result.success) {
+        setSavedImage(base64);
         setName('');
         setComment('');
         setKanji('');

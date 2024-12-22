@@ -1,10 +1,15 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary-100: #F3EFEF;
+  --primary-200: #F0EAEA;
+  --primary-300: #CEB8B7;
+  --primary-500: #C5392F;
+  --primary-600: #753732;
 }
 
 body {
