@@ -9,18 +9,18 @@ type Props = {
 };
 
 const Preview = ({ name, comment, kanji, canvasRef }: Props) => {
-  const loadFontsAndGenerateImage = async () => {
-    await document.fonts.ready;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    await generateStripesEma(canvas, ctx, name, comment, kanji);
-  };
-
   useEffect(() => {
+    const loadFontsAndGenerateImage = async () => {
+      await document.fonts.ready;
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) return;
+      await generateStripesEma(canvas, ctx, name, comment, kanji);
+    };
+
     loadFontsAndGenerateImage();
-  }, [name, comment, kanji, canvasRef, loadFontsAndGenerateImage]);
+  }, [name, comment, kanji, canvasRef]);
 
   return (
     <div className="flex justify-center items-center mx-18">
