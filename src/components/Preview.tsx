@@ -9,7 +9,6 @@ type Props = {
 };
 
 const Preview = ({ name, comment, kanji, canvasRef }: Props) => {
-
   const loadFontsAndGenerateImage = async () => {
     await document.fonts.ready;
     const canvas = canvasRef.current;
@@ -21,7 +20,7 @@ const Preview = ({ name, comment, kanji, canvasRef }: Props) => {
 
   useEffect(() => {
     loadFontsAndGenerateImage();
-  }, [name, comment, kanji, canvasRef]);
+  }, [name, comment, kanji, canvasRef, loadFontsAndGenerateImage]);
 
   return (
     <div className="flex justify-center items-center mx-18">

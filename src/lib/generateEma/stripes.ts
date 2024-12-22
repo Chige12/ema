@@ -134,14 +134,14 @@ const fillText = (
   name: string,
   comment: string,
   kanji: string,
-): { fillName: string; fillComment: string, fillKanji: string } => {
+): { fillName: string; fillComment: string; fillKanji: string } => {
   let fillName = name,
     fillComment = comment,
     fillKanji = kanji;
   if (!name) fillName = DEFAULT_NAME;
   if (!comment) fillComment = DEFAULT_COMMENT;
   if (!kanji) fillKanji = DEFAULT_KANJI;
-  return { fillName, fillComment, fillKanji};
+  return { fillName, fillComment, fillKanji };
 };
 
 export const generateStripesEma = async (

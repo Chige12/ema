@@ -1,17 +1,17 @@
-"use client";
+'use client';
 
-import React from "react";
-import { EmaList } from "@/components/EmaList";
-import { Form } from "@/components/Form";
-import { Preview } from "@/components/Preview";
-import { useEmaList, useForm } from "./home.hooks";
-import { MemoizedResults } from "@/components/Results";
+import React from 'react';
+import { EmaList } from '@/components/EmaList';
+import { Form } from '@/components/Form';
+import { Preview } from '@/components/Preview';
+import { MemoizedResults } from '@/components/Results';
+import { useEmaList, useForm } from './home.hooks';
 
 export default function Home() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   const { fetchEmaList, emaList } = useEmaList();
-  const [savedImage, setSavedImage] = React.useState<string | null>("null");
+  const [savedImage, setSavedImage] = React.useState<string | null>('null');
   const {
     name,
     comment,

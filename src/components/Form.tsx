@@ -1,5 +1,9 @@
-import { DEFAULT_COMMENT, DEFAULT_KANJI, DEFAULT_NAME } from '@/lib/generateEma/constants';
 import React from 'react';
+import {
+  DEFAULT_COMMENT,
+  DEFAULT_KANJI,
+  DEFAULT_NAME,
+} from '@/lib/generateEma/constants';
 
 type Props = {
   name: string;
@@ -7,7 +11,7 @@ type Props = {
   kanji: string;
   setName: (name: string) => void;
   setComment: (comment: string) => void;
-  setKanji: (kanji: string) => void
+  setKanji: (kanji: string) => void;
   loading: boolean;
   handleSubmit: (e: React.FormEvent) => void;
 };
