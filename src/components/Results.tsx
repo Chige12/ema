@@ -1,5 +1,5 @@
+import Image from 'next/image';
 import React from 'react';
-import NextImage from 'next/image';
 
 type Props = {
   savedImage: string | null;
@@ -55,11 +55,13 @@ const Results = ({ savedImage, setSavedImage }: Props) => {
             </svg>
           </button>
           <div className="max-w-3xl mx-auto p-6 text-center">
-            <p>あなたの願いが叶いますように ✧₊˚</p>
-            <NextImage
+            <Image
               src={savedImage}
               alt="保存された絵馬"
               className="max-w-full h-auto rounded-lg shadow-md"
+              layout="responsive"
+              width={700}
+              height={475}
             />
             <button type="button" onClick={saveImage}>
               画像を保存
