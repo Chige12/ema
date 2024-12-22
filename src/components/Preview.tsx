@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { RefObject, useEffect } from 'react';
+import { generateStripesEma } from '@/lib/generateEma/stripes';
 
 type Props = {
   name: string;
   comment: string;
-  canvasRef: React.RefObject<HTMLCanvasElement | null>;
+  canvasRef: RefObject<HTMLCanvasElement | null>;
 };
 
 const Preview = ({ name, comment, canvasRef }: Props) => {
@@ -12,19 +13,7 @@ const Preview = ({ name, comment, canvasRef }: Props) => {
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-
-    // 1080x1080の背景白の正方形の画像を生成
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'white';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // nameとcommentの赤色のテキストを描画
-    ctx.fillStyle = 'red';
-    ctx.font = '48px Arial';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(name, canvas.width / 2, canvas.height / 3);
-    ctx.fillText(comment, canvas.width / 2, (canvas.height / 3) * 2);
+    generateStripesEma(canvas, ctx, name, comment);
   }, [name, comment, canvasRef]);
 
   return (
