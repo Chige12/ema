@@ -11,7 +11,7 @@ export default function Home() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
   const { fetchEmaList, emaList } = useEmaList();
-  const [savedImage, setSavedImage] = React.useState<string | null>('null');
+  const [savedImage, setSavedImage] = React.useState<string | null>(null);
   const {
     name,
     comment,
