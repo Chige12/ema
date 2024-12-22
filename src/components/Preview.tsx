@@ -1,4 +1,4 @@
-import React, { RefObject, useEffect } from 'react';
+import React, { RefObject, use, useEffect } from 'react';
 import { generateStripesEma } from '@/lib/generateEma/stripes';
 
 type Props = {
@@ -8,12 +8,18 @@ type Props = {
 };
 
 const Preview = ({ name, comment, canvasRef }: Props) => {
-  useEffect(() => {
+
+  const loadFontsAndGenerateImage = async () => {
+    await document.fonts.ready;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
-    generateStripesEma(canvas, ctx, name, comment);
+    await generateStripesEma(canvas, ctx, name, comment);
+  };
+
+  useEffect(() => {
+    loadFontsAndGenerateImage();
   }, [name, comment, canvasRef]);
 
   return (

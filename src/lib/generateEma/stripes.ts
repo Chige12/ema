@@ -7,6 +7,7 @@ import {
   RIGHT,
   TOP,
 } from './constants';
+import { hinaMincho, sawarabiMincho, ysabeauSC } from './fonts';
 
 const CIRCLE_SIZE = 696;
 const CIRCLE_RADIUS = CIRCLE_SIZE / 2;
@@ -71,26 +72,26 @@ const drawText = (
   const currentDay = date.toLocaleDateString('en-US', { weekday: 'long' });
   // Date and Day
   ctx.textAlign = 'left';
-  ctx.font = "38px 'Ysabeau SC'";
-  ctx.fillText(currentDate, LEFT, TOP + 20);
-  ctx.fillText(currentDay, LEFT, TOP + 70);
+  ctx.font = `38px ${ysabeauSC.style.fontFamily.split(',')[0]}`;
+  ctx.fillText(currentDate, LEFT, TOP + 70);
+  ctx.fillText(currentDay, LEFT, TOP + 70 + 50);
 
   // Comment
-  ctx.font = "38px 'Hina Mincho'";
+  ctx.font = `38px ${hinaMincho.style.fontFamily.split(',')[0]}`;
   ctx.textAlign = 'right';
-  wrapText(ctx, comment, RIGHT, 380, INNER_SIZE - 180, 50);
+  wrapText(ctx, comment, RIGHT, 380, INNER_SIZE - 180, 58);
 
   // Kanji 1 word
   ctx.textAlign = 'left';
-  ctx.font = "230px 'Sawarabi Mincho'";
-  ctx.fillText('絵', LEFT, 780);
+  ctx.font = `230px ${sawarabiMincho.style.fontFamily.split(',')[0]}`;
+  ctx.fillText('絵', LEFT, 785);
 
   // Name
-  ctx.font = "32px 'Hina Mincho'";
+  ctx.font = `38px ${hinaMincho.style.fontFamily.split(',')[0]}`;
   ctx.textAlign = 'center';
   ctx.save();
   ctx.translate(780, 920);
-  ctx.rotate((-18 * Math.PI) / 180);
+  ctx.rotate((-18.5 * Math.PI) / 180);
   ctx.fillText(name, 0, 0);
   ctx.restore();
 };

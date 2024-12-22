@@ -1,3 +1,4 @@
+import { hinaMincho, sawarabiMincho, ysabeauSC } from '@/lib/generateEma/fonts';
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
 
@@ -12,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ja" className={`${hinaMincho.className} ${sawarabiMincho.className} ${ysabeauSC.className}`}>
       <body>{children}</body>
     </html>
   );
