@@ -6,6 +6,7 @@ import { Form } from '@/components/Form';
 import { Preview } from '@/components/Preview';
 import { MemoizedResults } from '@/components/Results';
 import { useEmaList, useForm } from './home.hooks';
+import { Tabs } from '@/components/Tabs/Tabs';
 
 export default function Home() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -24,31 +25,43 @@ export default function Home() {
   } = useForm(fetchEmaList, setSavedImage, canvasRef);
 
   return (
-    <main className="min-h-scree bg-primary-200 bg-asanoha bg-repeat bg-center bg-[length:80px]">
-      <div className="max-w-3xl mx-auto p-6">
-        <h2 className="text-sm font-bold text-primary-600 mb-4 text-center">
-          デザインを選ぶ
-        </h2>
-        <Preview
-          name={name}
-          comment={comment}
-          kanji={kanji}
-          canvasRef={canvasRef}
-        />
-        <Form
-          name={name}
-          comment={comment}
-          kanji={kanji}
-          setName={setName}
-          setComment={setComment}
-          setKanji={setKanji}
-          loading={loading}
-          handleSubmit={handleSubmit}
-        />
-        {/* コメント一覧 */}
-        <EmaList emaList={emaList} />
-      </div>
-      <MemoizedResults savedImage={savedImage} setSavedImage={setSavedImage} />
-    </main>
+    <Tabs>
+      <Tabs.Panel hash="" title="絵馬を作る">
+        <main className="min-h-screen bg-primary-200 bg-asanoha bg-repeat bg-center bg-[length:80px]">
+          <div className="max-w-3xl mx-auto p-6">
+            <h2 className="text-sm font-bold text-primary-600 mb-4 text-center">
+              デザインを選ぶ
+            </h2>
+            <Preview
+              name={name}
+              comment={comment}
+              kanji={kanji}
+              canvasRef={canvasRef}
+            />
+            <Form
+              name={name}
+              comment={comment}
+              kanji={kanji}
+              setName={setName}
+              setComment={setComment}
+              setKanji={setKanji}
+              loading={loading}
+              handleSubmit={handleSubmit}
+            />
+          </div>
+          <MemoizedResults
+            savedImage={savedImage}
+            setSavedImage={setSavedImage}
+          />
+        </main>
+      </Tabs.Panel>
+      <Tabs.Panel hash="gallery" title="みんなの絵馬">
+        <main className="min-h-screen bg-primary-200 bg-asanoha bg-repeat bg-center bg-[length:80px]">
+          <div className="max-w-3xl mx-auto p-6">
+            <EmaList emaList={emaList} />
+          </div>
+        </main>
+      </Tabs.Panel>
+    </Tabs>
   );
 }
