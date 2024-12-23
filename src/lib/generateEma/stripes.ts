@@ -38,6 +38,18 @@ const loadImage = (src: string): Promise<HTMLImageElement> => {
   });
 };
 
+export const prepareFontRendering = async (
+  name: string,
+  comment: string,
+  kanji: string,
+) => {
+  await document.fonts.ready;
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  drawText(ctx, name, comment, kanji);
+};
+
 const drawImages = async (
   ctx: CanvasRenderingContext2D,
   canvas: HTMLCanvasElement,
@@ -130,7 +142,7 @@ const wrapText = (
   }
 };
 
-const fillText = (
+export const getFillTexts = (
   name: string,
   comment: string,
   kanji: string,
@@ -151,11 +163,9 @@ export const generateStripesEma = async (
   comment: string,
   kanji: string,
 ) => {
-  const { fillName, fillComment, fillKanji } = fillText(name, comment, kanji);
-
   clearCanvas(ctx, canvas);
   drawBackground(ctx, canvas);
   drawImages(ctx, canvas, () => {
-    drawText(ctx, fillName, fillComment, fillKanji);
+    drawText(ctx, name, comment, kanji);
   });
 };
