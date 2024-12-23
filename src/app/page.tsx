@@ -24,8 +24,8 @@ export default function Home() {
   } = useForm(fetchEmaList, setSavedImage, canvasRef);
 
   return (
-    <main className="min-h-scree bg-primary-100">
-      <div className="max-w-3xl mx-auto p-6 bg-primary-100">
+    <main className="min-h-scree bg-primary-200 bg-asanoha bg-repeat bg-center bg-[length:80px]">
+      <div className="max-w-3xl mx-auto p-6">
         <h2 className="text-sm font-bold text-primary-600 mb-4 text-center">
           デザインを選ぶ
         </h2>
