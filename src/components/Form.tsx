@@ -16,6 +16,10 @@ type Props = {
   handleSubmit: (e: React.FormEvent) => void;
 };
 
+const lavel_class = 'block text-sm font-bold text-primary-600';
+const input_class =
+  'mt-1 p-3 rounded-md w-full text-primary-600 focus:outline-primary-600 placeholder:text-primary-300';
+
 const Form = ({
   name,
   comment,
@@ -27,12 +31,9 @@ const Form = ({
   handleSubmit,
 }: Props) => {
   return (
-    <form onSubmit={handleSubmit} className="mb-6">
-      <div className="mb-4">
-        <label
-          htmlFor="name"
-          className="block text-sm font-medium text-gray-700"
-        >
+    <form onSubmit={handleSubmit} className="my-8">
+      <div className="mb-6">
+        <label htmlFor="name" className={lavel_class}>
           なまえ *
         </label>
         <input
@@ -40,52 +41,47 @@ const Form = ({
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+          className={input_class}
           placeholder={DEFAULT_NAME}
           required
         />
       </div>
-      <div className="mb-4">
-        <label
-          htmlFor="comment"
-          className="block text-sm font-medium text-gray-700"
-        >
+      <div className="mb-6">
+        <label htmlFor="comment" className={lavel_class}>
           ねがいごと *
         </label>
         <textarea
           id="comment"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
-          className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+          className={input_class}
           placeholder={DEFAULT_COMMENT}
+          rows={4}
           required
         />
       </div>
-      <div className="mb-4">
-        <label
-          htmlFor="kanji"
-          className="block text-sm font-medium text-gray-700"
-        >
+      <div className="mb-6">
+        <label htmlFor="kanji" className={lavel_class}>
           2025年 わたしの漢字（1文字）
         </label>
         <input
           id="kanji"
           value={kanji}
           onChange={(e) => setKanji(e.target.value)}
-          className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+          className={input_class}
           placeholder={DEFAULT_KANJI}
         />
       </div>
       <button
         type="submit"
-        className={`w-full p-2 text-white rounded-md ${
+        className={`w-full p-4 text-white rounded-full transition-all ${
           loading
-            ? 'bg-gray-400 cursor-not-allowed'
-            : 'bg-blue-500 hover:bg-blue-600'
+            ? 'bg-primary-600 cursor-not-allowed'
+            : 'bg-primary-500 filter hover:brightness-110'
         }`}
         disabled={loading}
       >
-        {loading ? '送信中...' : 'コメントを送信'}
+        {loading ? '登録中...' : '絵馬を掛ける'}
       </button>
     </form>
   );

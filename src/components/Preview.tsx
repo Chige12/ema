@@ -39,13 +39,13 @@ const Preview = ({ name, comment, kanji, canvasRef }: Props) => {
   );
 
   return (
-    <div className="flex justify-center items-center mx-18">
+    <div className="flex justify-center items-center mx-16">
       <canvas
         ref={canvasRef}
         id="canvas"
         width="1080"
         height="1080"
-        className="max-w-full h-auto"
+        className="max-w-full h-auto rounded-md shadow-md bg-primary-300"
       ></canvas>
     </div>
   );
