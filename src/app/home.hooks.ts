@@ -21,7 +21,7 @@ export const useForm = (
   const [loading, setLoading] = useState(false);
 
   // フォーム送信
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
@@ -50,7 +50,7 @@ export const useForm = (
     } finally {
       setLoading(false);
     }
-  };
+  }, [name, comment, kanji, canvasRef, fetchEmaList, setSavedImage]);
 
   return {
     name,
@@ -68,7 +68,7 @@ export const useEmaList = () => {
   const [emaList, setEmaList] = useState([]);
   const [loadingEmaList, setLoadingEmaList] = useState(false);
   // 絵馬一覧を取得
-  const fetchEmaList = async () => {
+  const fetchEmaList = useCallback(async () => {
     setLoadingEmaList(true);
     try {
       const response = await fetch('/api/fetch-data');
@@ -82,11 +82,11 @@ export const useEmaList = () => {
       console.error('Error fetching emaList:', error);
     }
     setLoadingEmaList(false);
-  };
+  }, []);
 
   useEffect(() => {
     fetchEmaList();
-  }, []);
+  }, [fetchEmaList]);
 
   return {
     emaList,
