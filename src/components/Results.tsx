@@ -24,7 +24,7 @@ const Results = ({ name, savedImage, setSavedImage, changeTab }: Props) => {
       try {
         navigator.share({
           title: '絵馬を作成しました',
-          text: 'あなたも作ってみませんか？',
+          text: '#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト',
           url,
         });
       } catch {
