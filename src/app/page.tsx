@@ -49,7 +49,11 @@ export default function Home() {
               handleSubmit={handleSubmit}
             />
           </div>
-          <Results savedImage={savedImage} setSavedImage={setSavedImage} />
+          <Results
+            name={name}
+            savedImage={savedImage}
+            setSavedImage={setSavedImage}
+          />
         </main>
       </Tabs.Panel>
       <Tabs.Panel hash="gallery" title="みんなの絵馬">

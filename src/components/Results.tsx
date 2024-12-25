@@ -2,27 +2,33 @@ import Image from 'next/image';
 import React from 'react';
 
 type Props = {
+  name: string;
   savedImage: string | null;
   setSavedImage: (image: string | null) => void;
 };
 
-const Results = ({ savedImage, setSavedImage }: Props) => {
+const Results = ({ name, savedImage, setSavedImage }: Props) => {
   const saveImage = () => {
     if (!savedImage) return;
+    const today = new Date().toLocaleDateString('ja-JP');
     const link = document.createElement('a');
     link.href = savedImage;
-    link.download = 'ema.png';
+    link.download = `${today}_${name}.png`;
     link.click();
   };
 
   const shareImage = async () => {
     const url = window.location.origin;
     if (navigator.share) {
-      navigator.share({
-        title: '願い事',
-        text: 'あなたの願いが叶いますように ✧₊˚',
-        url,
-      });
+      try {
+        navigator.share({
+          title: '絵馬を作成しました',
+          text: 'あなたも作ってみませんか？',
+          url,
+        });
+      } catch {
+        await navigator.clipboard.writeText(url);
+      }
     } else {
       // Web Share APIが使えないブラウザの処理
       await navigator.clipboard.writeText(url);
@@ -59,19 +65,40 @@ const Results = ({ savedImage, setSavedImage }: Props) => {
               </svg>
             </button>
             <div className="max-w-3xl mx-auto p-6 text-center">
+              <p className="my-16 font-bold text-primary-500">
+                あなたの願いが叶いますように ✧₊˚
+              </p>
               <Image
                 src={savedImage}
                 alt="保存された絵馬"
-                className="max-w-full h-auto rounded-lg shadow-md"
+                className="my-16 max-w-full h-auto rounded-lg shadow-md"
                 layout="responsive"
                 width={700}
                 height={475}
               />
-              <button type="button" onClick={saveImage}>
+              <button
+                type="button"
+                className="w-full p-3 m-1 rounded-full transition-all border-4 border-primary-500 bg-white text-primary-500 active:bg-primary-500 active:text-white"
+                onClick={saveImage}
+              >
                 画像を保存
               </button>
-              <button type="button" onClick={shareImage}>
+              <button
+                type="button"
+                className="w-full p-3 m-1 rounded-full transition-all border-4 border-primary-500 bg-white text-primary-500 active:bg-primary-500 active:text-white"
+                onClick={shareImage}
+              >
                 シェア
+              </button>
+              <button
+                type="button"
+                className="w-full p-3 m-1 rounded-full transition-all bg-primary-500 text-white active:filter active:brightness-110"
+                onClick={() => {
+                  setSavedImage(null);
+                  window.location.href = '#gallery';
+                }}
+              >
+                みんなの絵馬を見る
               </button>
             </div>
           </div>
