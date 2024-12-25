@@ -1,5 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import {
+  fetchEmaListFromApi,
+  fetchEmaListFromCache,
+  saveEmaListToCache,
+} from '@/lib/generateEma/emaListHelpers';
 import { resizeAndCompressImage } from '@/lib/generateEma/imageHelpers';
+import { Ema } from '@/types/ema';
 
 const generateBase64Image = (
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
@@ -68,28 +74,22 @@ export const useForm = (
 };
 
 export const useEmaList = () => {
-  const [emaList, setEmaList] = useState([]);
+  const [emaList, setEmaList] = useState<Ema[]>(fetchEmaListFromCache);
   const [loadingEmaList, setLoadingEmaList] = useState(false);
   // 絵馬一覧を取得
   const fetchEmaList = useCallback(async () => {
     setLoadingEmaList(true);
-    try {
-      const response = await fetch('/api/fetch-data');
-      const data = await response.json();
-      if (data.success) {
-        setEmaList(data.data || []);
-      } else {
-        console.error('Failed to fetch emaList');
-      }
-    } catch (error) {
-      console.error('Error fetching emaList:', error);
-    }
+
+    const emaList = await fetchEmaListFromApi();
+    setEmaList(emaList);
+    saveEmaListToCache(emaList);
+
     setLoadingEmaList(false);
   }, []);
 
   useEffect(() => {
-    fetchEmaList();
-  }, [fetchEmaList]);
+    if (emaList.length === 0) fetchEmaList();
+  }, [fetchEmaList, emaList.length]);
 
   return {
     emaList,
