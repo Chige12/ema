@@ -91,6 +91,7 @@ const Results = ({ name, savedImage, setSavedImage }: Props) => {
                 className="w-full p-3 m-1 rounded-full transition-all bg-primary-500 text-white active:filter active:brightness-110"
                 onClick={() => {
                   setSavedImage(null);
+                  window.location.href = '/gallery';
                 }}
               >
                 みんなの絵馬を見る
