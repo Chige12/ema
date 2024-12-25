@@ -56,7 +56,7 @@ export default function Home() {
           />
         </main>
       </Tabs.Panel>
-      <Tabs.Panel hash="gallery" title="みんなの絵馬">
+      <Tabs.Panel hash="#gallery" title="みんなの絵馬">
         <main className="min-h-screen bg-primary-200 bg-asanoha bg-repeat bg-center bg-[length:80px]">
           <div className="max-w-3xl mx-auto p-6">
             <EmaList emaList={emaList} />

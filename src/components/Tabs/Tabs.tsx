@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Tab } from './Tab';
 import { TabItem } from './TabItem';
 
@@ -13,7 +13,17 @@ type TabsProps = {
 };
 
 const Tabs = ({ children }: TabsProps) => {
-  const [activeIndex, setActiveIndex] = React.useState(0);
+  const initialIndex = useMemo(() => {
+    const hash = window.location.hash;
+    switch (hash) {
+      case '#gallery':
+        return 1;
+      default:
+        return 0;
+    }
+  }, []);
+
+  const [activeIndex, setActiveIndex] = React.useState(initialIndex);
   return (
     <div>
       <Tab>

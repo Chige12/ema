@@ -15,7 +15,7 @@ const TabItem = ({ title, active, onClick, hash }: Props) => {
     <a
       className={`${active ? active_class : inactive_class} w-full text-center p-1 border-4 border-b-0 rounded-t-2xl border-primary-500`}
       onClick={onClick}
-      href={`#${hash}`}
+      href={`${hash}`}
     >
       {title}
     </a>
