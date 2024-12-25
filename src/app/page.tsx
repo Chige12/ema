@@ -4,9 +4,9 @@ import React from 'react';
 import { EmaList } from '@/components/EmaList';
 import { Form } from '@/components/Form';
 import { Preview } from '@/components/Preview';
-import { MemoizedResults } from '@/components/Results';
-import { useEmaList, useForm } from './home.hooks';
+import { Results } from '@/components/Results';
 import { Tabs } from '@/components/Tabs/Tabs';
+import { useEmaList, useForm } from './home.hooks';
 
 export default function Home() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
@@ -49,10 +49,7 @@ export default function Home() {
               handleSubmit={handleSubmit}
             />
           </div>
-          <MemoizedResults
-            savedImage={savedImage}
-            setSavedImage={setSavedImage}
-          />
+          <Results savedImage={savedImage} setSavedImage={setSavedImage} />
         </main>
       </Tabs.Panel>
       <Tabs.Panel hash="gallery" title="みんなの絵馬">

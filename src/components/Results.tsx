@@ -33,42 +33,47 @@ const Results = ({ savedImage, setSavedImage }: Props) => {
   return (
     <>
       {savedImage && (
-        <div className="fixed top-0 left-0 w-full h-full z-50 bg-primary-100">
-          <button
-            onClick={() => setSavedImage(null)}
-            className="fixed top-4 right-4 border-gray-300 rounded-full p-4 bg-primary-500"
+        <div className="max-h-screen overflow-auto fixed top-0 left-0 w-full h-full z-50 bg-primary-100 overscroll-contain">
+          <div
+            className="bg-transparent w-full h-full"
+            style={{ height: 'calc(100vh + 1px)' }}
           >
-            <svg
-              width="14"
-              height="14"
-              viewBox="0 0 14 14"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+            <button
+              onClick={() => setSavedImage(null)}
+              className="fixed top-4 right-4 border-gray-300 rounded-full p-4 bg-primary-500"
             >
-              <path
-                d="M1 1L13 13M13 1L1 13"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1 1L13 13M13 1L1 13"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+            <div className="max-w-3xl mx-auto p-6 text-center">
+              <Image
+                src={savedImage}
+                alt="保存された絵馬"
+                className="max-w-full h-auto rounded-lg shadow-md"
+                layout="responsive"
+                width={700}
+                height={475}
               />
-            </svg>
-          </button>
-          <div className="max-w-3xl mx-auto p-6 text-center">
-            <Image
-              src={savedImage}
-              alt="保存された絵馬"
-              className="max-w-full h-auto rounded-lg shadow-md"
-              layout="responsive"
-              width={700}
-              height={475}
-            />
-            <button type="button" onClick={saveImage}>
-              画像を保存
-            </button>
-            <button type="button" onClick={shareImage}>
-              シェア
-            </button>
+              <button type="button" onClick={saveImage}>
+                画像を保存
+              </button>
+              <button type="button" onClick={shareImage}>
+                シェア
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -76,4 +81,5 @@ const Results = ({ savedImage, setSavedImage }: Props) => {
   );
 };
 
-export const MemoizedResults = React.memo(Results);
+const MemoizedResults = React.memo(Results);
+export { MemoizedResults as Results };
