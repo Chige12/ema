@@ -21,36 +21,39 @@ export const useForm = (
   const [loading, setLoading] = useState(false);
 
   // フォーム送信
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
+  const handleSubmit = useCallback(
+    async (e: React.FormEvent) => {
+      e.preventDefault();
+      setLoading(true);
 
-    try {
-      const base64 = generateBase64Image(canvasRef);
-      const resizedBase64 = await resizeAndCompressImage(base64);
+      try {
+        const base64 = generateBase64Image(canvasRef);
+        const resizedBase64 = await resizeAndCompressImage(base64);
 
-      const response = await fetch('/api/submit-form', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, comment, base64: resizedBase64, kanji }),
-      });
+        const response = await fetch('/api/submit-form', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, comment, base64: resizedBase64, kanji }),
+        });
 
-      const result = await response.json();
-      if (result.success) {
-        setSavedImage(base64);
-        setName('');
-        setComment('');
-        setKanji('');
-        fetchEmaList(); // 更新された絵馬一覧を取得
-      } else {
-        console.error('Failed to submit comment');
+        const result = await response.json();
+        if (result.success) {
+          setSavedImage(base64);
+          setName('');
+          setComment('');
+          setKanji('');
+          fetchEmaList(); // 更新された絵馬一覧を取得
+        } else {
+          console.error('Failed to submit comment');
+        }
+      } catch (error) {
+        console.error('Error submitting comment:', error);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      console.error('Error submitting comment:', error);
-    } finally {
-      setLoading(false);
-    }
-  }, [name, comment, kanji, canvasRef, fetchEmaList, setSavedImage]);
+    },
+    [name, comment, kanji, canvasRef, fetchEmaList, setSavedImage],
+  );
 
   return {
     name,
