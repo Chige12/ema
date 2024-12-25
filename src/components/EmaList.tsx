@@ -9,31 +9,28 @@ type Props = {
 const EmaList = ({ emaList }: Props) => {
   return (
     <>
-      <h2 className="text-xl font-bold text-gray-800 mb-4">コメント一覧</h2>
+      <h2 className="text-sm font-bold text-primary-600 mb-4 text-center">
+        みんなの絵馬
+      </h2>
       {emaList.length > 0 ? (
-        <ul className="space-y-4">
+        <ul className="grid grid-cols-2 gap-x-2 gap-y-4">
           {emaList.map((item: Ema, index: number) => (
-            <li key={index} className="p-4 border rounded-md bg-gray-50">
+            <li key={index} className="rounded-md">
               <NextImage
                 src={item.base64}
-                alt="絵馬のプレビュー"
-                className="max-w-full h-auto rounded-md"
+                alt={`${item.name}さんの絵馬：${item.comment} ${new Date(item.timestamp).toLocaleString()}`}
+                className="h-auto rounded-md shadow-md"
                 layout="responsive"
                 width={100}
                 height={100}
               />
-              <p className="text-sm text-gray-600">
-                <strong>{item.name}</strong>さん
-              </p>
-              <p className="text-gray-800">{item.comment}</p>
-              <small className="text-xs text-gray-400">
-                {new Date(item.timestamp).toLocaleString()}
-              </small>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="text-gray-600">コメントはまだありません。</p>
+        <p className="text-gray-600 text-center">
+          絵馬が見つかりませんでした。🙏
+        </p>
       )}
     </>
   );
