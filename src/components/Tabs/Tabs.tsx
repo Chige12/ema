@@ -36,7 +36,9 @@ const Panel = ({ children }: TabPanelProps) => <>{children}</>;
 
 Tabs.Panel = Panel;
 
-const MemoizedTabs = React.memo(Tabs) as unknown as typeof Tabs & { Panel: typeof Panel };
+const MemoizedTabs = React.memo(Tabs) as unknown as typeof Tabs & {
+  Panel: typeof Panel;
+};
 MemoizedTabs.Panel = Panel;
 
 export { MemoizedTabs as Tabs };
