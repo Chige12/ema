@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 const generateBase64Image = (
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
@@ -91,4 +91,42 @@ export const useEmaList = () => {
     fetchEmaList,
     loadingEmaList,
   };
+};
+
+export const TAB_TYPE = <const>{
+  HOME: 0,
+  GALLERY: 1,
+};
+
+export const TAB_NAME = <const>{
+  HOME: 'HOME',
+  GALLERY: 'GALLERY',
+};
+
+export type TabName = keyof typeof TAB_NAME;
+
+export const useTabs = () => {
+  const hash = window.location.hash;
+
+  const initialIndex = useMemo(() => {
+    switch (hash) {
+      case '#gallery':
+        return 1;
+      default:
+        return 0;
+    }
+  }, [hash]);
+
+  const [activeIndex, setActiveIndex] = React.useState(initialIndex);
+
+  useEffect(() => {
+    window.location.hash = activeIndex === 1 ? '#gallery' : '';
+  }, [activeIndex]);
+
+  const changeTab = useCallback((tabName: TabName) => {
+    const index = TAB_TYPE[tabName];
+    setActiveIndex(index);
+  }, []);
+
+  return { activeIndex, setActiveIndex, changeTab };
 };

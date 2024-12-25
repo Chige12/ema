@@ -6,11 +6,12 @@ import { Form } from '@/components/Form';
 import { Preview } from '@/components/Preview';
 import { Results } from '@/components/Results';
 import { Tabs } from '@/components/Tabs/Tabs';
-import { useEmaList, useForm } from './home.hooks';
+import { useEmaList, useForm, useTabs } from './home.hooks';
 
 export default function Home() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
+  const { activeIndex, setActiveIndex, changeTab } = useTabs();
   const { fetchEmaList, emaList, loadingEmaList } = useEmaList();
   const [savedImage, setSavedImage] = React.useState<string | null>(null);
   const {
@@ -25,7 +26,7 @@ export default function Home() {
   } = useForm(fetchEmaList, setSavedImage, canvasRef);
 
   return (
-    <Tabs>
+    <Tabs activeIndex={activeIndex} setActiveIndex={setActiveIndex}>
       <Tabs.Panel hash="" title="絵馬を作る">
         <main className="min-h-screen bg-primary-200 bg-asanoha bg-repeat bg-center bg-[length:80px]">
           <div className="max-w-3xl mx-auto p-6">
@@ -53,6 +54,7 @@ export default function Home() {
             name={name}
             savedImage={savedImage}
             setSavedImage={setSavedImage}
+            changeTab={changeTab}
           />
         </main>
       </Tabs.Panel>

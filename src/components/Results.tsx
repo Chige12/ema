@@ -1,13 +1,15 @@
 import Image from 'next/image';
 import React from 'react';
+import { TAB_NAME, TabName } from '@/app/home.hooks';
 
 type Props = {
   name: string;
   savedImage: string | null;
   setSavedImage: (image: string | null) => void;
+  changeTab: (tabName: TabName) => void;
 };
 
-const Results = ({ name, savedImage, setSavedImage }: Props) => {
+const Results = ({ name, savedImage, setSavedImage, changeTab }: Props) => {
   const saveImage = () => {
     if (!savedImage) return;
     const today = new Date().toLocaleDateString('ja-JP');
@@ -95,7 +97,7 @@ const Results = ({ name, savedImage, setSavedImage }: Props) => {
                 className="w-full p-3 m-1 rounded-full transition-all bg-primary-500 text-white active:filter active:brightness-110"
                 onClick={() => {
                   setSavedImage(null);
-                  window.location.href = '#gallery';
+                  changeTab(TAB_NAME.GALLERY);
                 }}
               >
                 みんなの絵馬を見る
