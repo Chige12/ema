@@ -64,8 +64,10 @@ export const useForm = (
 
 export const useEmaList = () => {
   const [emaList, setEmaList] = useState([]);
+  const [loadingEmaList, setLoadingEmaList] = useState(false);
   // 絵馬一覧を取得
   const fetchEmaList = async () => {
+    setLoadingEmaList(true);
     try {
       const response = await fetch('/api/fetch-data');
       const data = await response.json();
@@ -77,6 +79,7 @@ export const useEmaList = () => {
     } catch (error) {
       console.error('Error fetching emaList:', error);
     }
+    setLoadingEmaList(false);
   };
 
   useEffect(() => {
@@ -86,5 +89,6 @@ export const useEmaList = () => {
   return {
     emaList,
     fetchEmaList,
+    loadingEmaList,
   };
 };

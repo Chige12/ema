@@ -11,7 +11,7 @@ import { useEmaList, useForm } from './home.hooks';
 export default function Home() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const { fetchEmaList, emaList } = useEmaList();
+  const { fetchEmaList, emaList, loadingEmaList } = useEmaList();
   const [savedImage, setSavedImage] = React.useState<string | null>(null);
   const {
     name,
@@ -59,7 +59,11 @@ export default function Home() {
       <Tabs.Panel hash="#gallery" title="みんなの絵馬">
         <main className="min-h-screen bg-primary-200 bg-asanoha bg-repeat bg-center bg-[length:80px]">
           <div className="max-w-3xl mx-auto p-6">
-            <EmaList emaList={emaList} />
+            {loadingEmaList ? (
+              <p className="text-primary-600 text-center">絵馬を読み込み中。</p>
+            ) : (
+              <EmaList emaList={emaList} />
+            )}
           </div>
         </main>
       </Tabs.Panel>
