@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import React from 'react';
 import { TAB_NAME, TabName } from '@/app/home.hooks';
 
@@ -70,13 +69,10 @@ const Results = ({ name, savedImage, setSavedImage, changeTab }: Props) => {
               <p className="my-16 font-bold text-primary-500">
                 あなたの願いが叶いますように ✧₊˚
               </p>
-              <Image
+              <img
                 src={savedImage}
                 alt="保存された絵馬"
                 className="my-16 max-w-full h-auto rounded-lg shadow-md"
-                layout="responsive"
-                width={700}
-                height={475}
               />
               <button
                 type="button"

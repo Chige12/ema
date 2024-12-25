@@ -1,4 +1,3 @@
-import NextImage from 'next/image';
 import React from 'react';
 import { Ema } from '@/types/ema';
 
@@ -16,13 +15,11 @@ const EmaList = ({ emaList }: Props) => {
         <ul className="grid grid-cols-2 gap-x-2 gap-y-4">
           {emaList.map((item: Ema, index: number) => (
             <li key={index} className="rounded-md">
-              <NextImage
+              <img
                 src={item.base64}
                 alt={`${item.name}さんの絵馬：${item.comment} ${new Date(item.timestamp).toLocaleString()}`}
-                className="h-auto rounded-md shadow-md"
-                layout="responsive"
-                width={100}
-                height={100}
+                className="h-auto rounded-md shadow-md cursor-pointer"
+                onClick={() => handleImageClick(item)}
               />
             </li>
           ))}
