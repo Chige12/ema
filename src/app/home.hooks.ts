@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import { resizeAndCompressImage } from '@/lib/generateEma/imageHelpers';
 
 const generateBase64Image = (
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
@@ -26,11 +27,12 @@ export const useForm = (
 
     try {
       const base64 = generateBase64Image(canvasRef);
+      const resizedBase64 = await resizeAndCompressImage(base64);
 
       const response = await fetch('/api/submit-form', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, comment, base64, kanji }),
+        body: JSON.stringify({ name, comment, base64: resizedBase64, kanji }),
       });
 
       const result = await response.json();
