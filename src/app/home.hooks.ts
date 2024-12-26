@@ -24,6 +24,7 @@ export const useForm = (
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
   const [kanji, setKanji] = useState('');
+  const [mail, setMail] = useState('');
   const [loading, setLoading] = useState(false);
 
   // フォーム送信
@@ -39,7 +40,13 @@ export const useForm = (
         const response = await fetch('/api/submit-form', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name, comment, base64: resizedBase64, kanji }),
+          body: JSON.stringify({
+            name,
+            comment,
+            base64: resizedBase64,
+            kanji,
+            mail,
+          }),
         });
 
         const result = await response.json();
@@ -48,6 +55,7 @@ export const useForm = (
           setName('');
           setComment('');
           setKanji('');
+          setMail('');
           fetchEmaList(); // 更新された絵馬一覧を取得
         } else {
           console.error('Failed to submit comment');
@@ -58,16 +66,17 @@ export const useForm = (
         setLoading(false);
       }
     },
-    [name, comment, kanji, canvasRef, fetchEmaList, setSavedImage],
+    [name, comment, kanji, mail, canvasRef, fetchEmaList, setSavedImage]
   );
-
   return {
     name,
     comment,
     kanji,
+    mail,
     setName,
     setComment,
     setKanji,
+    setMail,
     loading,
     handleSubmit,
   };

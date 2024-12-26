@@ -16,9 +16,11 @@ export default function Home() {
     name,
     comment,
     kanji,
+    mail,
     setName,
     setComment,
     setKanji,
+    setMail,
     loading,
     handleSubmit,
   } = useForm(fetchEmaList, setSavedImage, canvasRef);
@@ -26,7 +28,7 @@ export default function Home() {
   return (
     <div>
       <Tabs />
-      <main className="min-h-screen bg-primary-200 bg-asanoha bg-repeat bg-center bg-[length:80px]">
+      <main className="min-h-screen bg-primary-200 bg-asanoha bg-repeat bg-[length:80px]">
         <div className="max-w-3xl mx-auto p-6">
           <h2 className="text-sm font-bold text-primary-600 mb-4 text-center">
             デザインを選ぶ
@@ -41,9 +43,11 @@ export default function Home() {
             name={name}
             comment={comment}
             kanji={kanji}
+            mail={mail}
             setName={setName}
             setComment={setComment}
             setKanji={setKanji}
+            setMail={setMail}
             loading={loading}
             handleSubmit={handleSubmit}
           />
