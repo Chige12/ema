@@ -9,7 +9,7 @@ const Footer = () => {
         </div>
         <div className="flex justify-center items-center gap-2">
           <a
-            href="https://x.com/ema_0505"
+            href="https://x.com/ematokyo_"
             target="_blank"
             rel="noreferrer"
             className="mx-2 p-4 bg-white rounded-full"
@@ -17,7 +17,7 @@ const Footer = () => {
             <img src="./images/x.png" alt="x logo" />
           </a>
           <a
-            href="https://instagram.com/ema_0505"
+            href="https://www.instagram.com/ematokyo_/"
             target="_blank"
             rel="noreferrer"
             className="mx-2 p-4 bg-white rounded-full"
