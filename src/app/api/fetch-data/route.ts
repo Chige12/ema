@@ -13,7 +13,9 @@ export async function GET(request: NextRequest) {
     });
 
     // GASからデータを取得
-    const data = await fetchDataFromGAS(params);
+    const start = parseInt(searchParams.get('start') || '0', 10);
+    const count = parseInt(searchParams.get('count') || '10', 10);
+    const data = await fetchDataFromGAS(params, start, count);
 
     // データをJSON形式でレスポンス
     return NextResponse.json({ success: true, data: data.items });
