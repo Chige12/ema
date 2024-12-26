@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { Footer } from '@/components/Footer';
 import { Form } from '@/components/Form';
 import { Preview } from '@/components/Preview';
 import { Results } from '@/components/Results';
@@ -57,6 +58,7 @@ export default function Home() {
           savedImage={savedImage}
           setSavedImage={setSavedImage}
         />
+        <Footer />
       </main>
     </div>
   );

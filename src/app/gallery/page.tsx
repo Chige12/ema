@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { EmaList } from '@/components/EmaList';
+import { Footer } from '@/components/Footer';
 import { Tabs } from '@/components/Tabs/Tabs';
 import { useEmaList } from '../home.hooks';
 
@@ -19,6 +20,7 @@ export default function Gallery() {
             <EmaList emaList={emaList} />
           )}
         </div>
+        <Footer />
       </main>
     </div>
   );
