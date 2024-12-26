@@ -1,8 +1,10 @@
 import { Ema } from '@/types/ema';
 
-export const fetchEmaListFromApi = async () => {
+export const fetchEmaListFromApi = async (start: number, count: number) => {
   try {
-    const response = await fetch('/api/fetch-data');
+    const response = await fetch(
+      `/api/fetch-data?start=${start}&count=${count}`,
+    );
     const data = await response.json();
     if (data.success) {
       return data.data || [];
@@ -19,7 +21,7 @@ export const fetchEmaListFromApi = async () => {
 export const fetchEmaListFromCache = () => {
   if (!localStorage) return [];
   const cachedData = localStorage.getItem('emaList');
-  if (cachedData) {
+  if (cachedData && cachedData !== 'undefined') {
     return JSON.parse(cachedData);
   }
   return [];

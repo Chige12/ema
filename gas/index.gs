@@ -38,6 +38,28 @@ function readData(sheet) {
 }
 
 /**
+ * スプレッドシートから指定範囲のデータを読み取る関数
+ * @param {GoogleAppsScript.Spreadsheet.Sheet} sheet スプレッドシート
+ * @param {number} start 開始インデックス
+ * @param {number} count 取得する行数
+ */
+function readDataRange(sheet, start, count) {
+  const rows = sheet.getDataRange().getValues();
+  const data = rows.slice(start, start + count).map((row) => ({
+    name: row[0], // 1列目: 名前
+    comment: row[1], // 2列目: コメント
+    kanji: row[2], // 3行目: 漢字
+    timestamp: row[3], // 4行目: タイムスタンプ
+    base64: row[4], // 5行目: 画像データ
+    mail: row[5], // 6行目: メールアドレス
+  }));
+
+  return ContentService.createTextOutput(
+    JSON.stringify({ success: true, items: data })
+  ).setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
  * POSTリクエストハンドラ
  * @param {GoogleAppsScript.Events.DoPost} e リクエストデータ
  */
@@ -72,7 +94,10 @@ function doGet(e) {
       throw new Error("Sheet not found");
     }
 
-    return readData(sheet); // データを取得
+    const start = parseInt(e.parameter.start, 10) || 0;
+    const count = parseInt(e.parameter.count, 10) || 10;
+
+    return readDataRange(sheet, start, count); // 指定範囲のデータを取得
   } catch (error) {
     return ContentService.createTextOutput(
       JSON.stringify({ success: false, error: error.message })

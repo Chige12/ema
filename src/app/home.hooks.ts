@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { FETCH_COUNT, MAX_FETCH_COUNT } from '@/lib/generateEma/constants';
 import {
   fetchEmaListFromApi,
   fetchEmaListFromCache,
@@ -82,28 +83,57 @@ export const useForm = (
   };
 };
 
+const createAndSetNewEmaList = (
+  fetchedEmaList: Ema[],
+  setEmaList: React.Dispatch<React.SetStateAction<Ema[]>>,
+) => {
+  setEmaList((prev: Ema[]) => {
+    const newList = [...prev, ...fetchedEmaList];
+    const uniqueList = Array.from(
+      new Set(newList.map((ema) => ema.timestamp)),
+    ).flatMap(
+      (timestamp) => newList.find((ema) => ema.timestamp === timestamp) || [],
+    );
+    uniqueList.sort(
+      (a, b) =>
+        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+    );
+    saveEmaListToCache(uniqueList);
+    return uniqueList;
+  });
+};
+
 export const useEmaList = () => {
   const [emaList, setEmaList] = useState<Ema[]>([]);
   const [loadingEmaList, setLoadingEmaList] = useState(true);
 
   // 絵馬一覧を取得
   const fetchEmaList = useCallback(async () => {
-    setLoadingEmaList(true);
-
     const cachedData = fetchEmaListFromCache();
     if (cachedData.length > 0) {
       setEmaList(cachedData);
-    } else {
-      const emaList = await fetchEmaListFromApi();
-      setEmaList(emaList);
-      saveEmaListToCache(emaList);
+      setLoadingEmaList(false);
+    }
+
+    let loadedCount = cachedData.length;
+    if (loadedCount >= MAX_FETCH_COUNT) {
+      setLoadingEmaList(false);
+      return;
+    }
+
+    for (let i = 0; i < MAX_FETCH_COUNT; i += FETCH_COUNT) {
+      if (loadedCount >= MAX_FETCH_COUNT) break;
+      const fetchedEmaList: Ema[] = await fetchEmaListFromApi(i, FETCH_COUNT);
+      loadedCount += FETCH_COUNT;
+      if (fetchedEmaList.length === 0) break;
+      createAndSetNewEmaList(fetchedEmaList, setEmaList);
     }
 
     setLoadingEmaList(false);
   }, []);
 
   useEffect(() => {
-    if (emaList.length === 0) fetchEmaList();
+    fetchEmaList();
   }, [emaList.length, fetchEmaList]);
 
   return {

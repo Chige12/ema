@@ -1,3 +1,7 @@
+// 取得件数
+export const FETCH_COUNT = 4;
+export const MAX_FETCH_COUNT = 20;
+
 // stylized constants
 export const PADDING = 64;
 export const CANVAS_SIZE = 1080;

@@ -1,4 +1,6 @@
-export async function postDataToGAS(data: { name: string; comment: string }) {
+import { Ema } from '@/types/ema';
+
+export async function postDataToGAS(data: Ema) {
   const gasEndpoint = process.env.GAS_ENDPOINT_URL;
 
   if (!gasEndpoint) {
@@ -35,7 +37,11 @@ export async function postDataToGAS(data: { name: string; comment: string }) {
   }
 }
 
-export async function fetchDataFromGAS(params: Record<string, unknown>) {
+export async function fetchDataFromGAS(
+  params: Record<string, unknown>,
+  start: number,
+  count: number,
+) {
   const gasEndpoint = process.env.GAS_ENDPOINT_URL;
 
   if (!gasEndpoint) {
@@ -44,10 +50,12 @@ export async function fetchDataFromGAS(params: Record<string, unknown>) {
 
   const url = new URL(gasEndpoint);
 
-  // クエリパラメータを設定（必要に応じて）
+  // クエリパラメータを設定
   Object.entries(params).forEach(([key, value]) => {
     url.searchParams.append(key, String(value));
   });
+  url.searchParams.append('start', String(start));
+  url.searchParams.append('count', String(count));
 
   // GASへのGETリクエスト
   const response = await fetch(url.toString(), {
@@ -64,7 +72,12 @@ export async function fetchDataFromGAS(params: Record<string, unknown>) {
 
   // レスポンスをJSONとしてパース
   const data = await response.json();
-  console.log('Fetched data from GAS:', data);
+  console.log(
+    'Fetched data from GAS:',
+    data.name,
+    data.comment,
+    data.timestamp,
+  );
 
   return data;
 }

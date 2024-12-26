@@ -4,4 +4,5 @@ export type Ema = {
   kanji: string;
   timestamp: number;
   base64: string;
+  mail: string;
 };
