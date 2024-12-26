@@ -66,7 +66,7 @@ export const useForm = (
         setLoading(false);
       }
     },
-    [name, comment, kanji, mail, canvasRef, fetchEmaList, setSavedImage]
+    [name, comment, kanji, mail, canvasRef, fetchEmaList, setSavedImage],
   );
   return {
     name,
@@ -83,22 +83,28 @@ export const useForm = (
 };
 
 export const useEmaList = () => {
-  const [emaList, setEmaList] = useState<Ema[]>(fetchEmaListFromCache);
-  const [loadingEmaList, setLoadingEmaList] = useState(false);
+  const [emaList, setEmaList] = useState<Ema[]>([]);
+  const [loadingEmaList, setLoadingEmaList] = useState(true);
+
   // 絵馬一覧を取得
   const fetchEmaList = useCallback(async () => {
     setLoadingEmaList(true);
 
-    const emaList = await fetchEmaListFromApi();
-    setEmaList(emaList);
-    saveEmaListToCache(emaList);
+    const cachedData = fetchEmaListFromCache();
+    if (cachedData.length > 0) {
+      setEmaList(cachedData);
+    } else {
+      const emaList = await fetchEmaListFromApi();
+      setEmaList(emaList);
+      saveEmaListToCache(emaList);
+    }
 
     setLoadingEmaList(false);
   }, []);
 
   useEffect(() => {
     if (emaList.length === 0) fetchEmaList();
-  }, [fetchEmaList, emaList.length]);
+  }, [emaList.length, fetchEmaList]);
 
   return {
     emaList,

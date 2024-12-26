@@ -17,6 +17,7 @@ export const fetchEmaListFromApi = async () => {
 };
 
 export const fetchEmaListFromCache = () => {
+  if (!localStorage) return [];
   const cachedData = localStorage.getItem('emaList');
   if (cachedData) {
     return JSON.parse(cachedData);
@@ -25,5 +26,6 @@ export const fetchEmaListFromCache = () => {
 };
 
 export const saveEmaListToCache = (emaList: Ema[]) => {
+  if (!localStorage) return;
   localStorage.setItem('emaList', JSON.stringify(emaList));
 };
