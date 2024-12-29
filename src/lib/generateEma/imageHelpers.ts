@@ -53,6 +53,7 @@ export const prepareFontRendering = async (
   name: string,
   comment: string,
   kanji: string,
+  size: number,
   drawText: (
     ctx: CanvasRenderingContext2D,
     name: string,
@@ -62,6 +63,8 @@ export const prepareFontRendering = async (
 ) => {
   await document.fonts.ready;
   const canvas = document.createElement('canvas');
+  canvas.width = size;
+  canvas.height = size;
   const ctx = canvas.getContext('2d');
   if (!ctx) return;
   drawText(ctx, name, comment, kanji);

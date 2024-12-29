@@ -129,7 +129,7 @@ export const generateStripesEma = async (
   comment: string,
   kanji: string,
 ) => {
-  await prepareFontRendering(name, comment, kanji, drawText);
+  await prepareFontRendering(name, comment, kanji, 1080, drawText);
   await new Promise((resolve) => setTimeout(resolve, 100));
   await document.fonts.ready;
   const canvas = canvasRef.current;
