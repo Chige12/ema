@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FETCH_COUNT, MAX_FETCH_COUNT } from '@/lib/generateEma/constants';
 import {
   fetchEmaListFromApi,
   fetchEmaListFromCache,
   saveEmaListToCache,
-} from '@/lib/generateEma/emaListHelpers';
+} from '@/lib/emaListHelpers';
+import { FETCH_COUNT, MAX_FETCH_COUNT } from '@/lib/generateEma/constants';
 import { resizeAndCompressImage } from '@/lib/generateEma/imageHelpers';
 import { Ema } from '@/types/ema';
 

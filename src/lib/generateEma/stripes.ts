@@ -1,14 +1,7 @@
-import {
-  CENTER,
-  DEFAULT_COMMENT,
-  DEFAULT_KANJI,
-  DEFAULT_NAME,
-  INNER_SIZE,
-  LEFT,
-  RIGHT,
-  TOP,
-} from './constants';
+import { RefObject } from 'react';
+import { CENTER, INNER_SIZE, LEFT, RIGHT, TOP } from './constants';
 import { hinaMincho, sawarabiMincho, ysabeauSC } from './fonts';
+import { prepareFontRendering } from './imageHelpers';
 
 const CIRCLE_SIZE = 696;
 const CIRCLE_RADIUS = CIRCLE_SIZE / 2;
@@ -36,18 +29,6 @@ const loadImage = (src: string): Promise<HTMLImageElement> => {
     img.onerror = reject;
     img.src = src;
   });
-};
-
-export const prepareFontRendering = async (
-  name: string,
-  comment: string,
-  kanji: string,
-) => {
-  await document.fonts.ready;
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  drawText(ctx, name, comment, kanji);
 };
 
 const drawImages = async (
@@ -142,30 +123,22 @@ const wrapText = (
   }
 };
 
-export const getFillTexts = (
-  name: string,
-  comment: string,
-  kanji: string,
-): { fillName: string; fillComment: string; fillKanji: string } => {
-  let fillName = name,
-    fillComment = comment,
-    fillKanji = kanji;
-  if (!name) fillName = DEFAULT_NAME;
-  if (!comment) fillComment = DEFAULT_COMMENT;
-  if (!kanji) fillKanji = DEFAULT_KANJI;
-  return { fillName, fillComment, fillKanji };
-};
-
 export const generateStripesEma = async (
-  canvas: HTMLCanvasElement,
-  ctx: CanvasRenderingContext2D,
+  canvasRef: RefObject<HTMLCanvasElement | null>,
   name: string,
   comment: string,
   kanji: string,
 ) => {
+  await prepareFontRendering(name, comment, kanji, drawText);
+  await new Promise((resolve) => setTimeout(resolve, 100));
+  await document.fonts.ready;
+  const canvas = canvasRef.current;
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
   clearCanvas(ctx, canvas);
   drawBackground(ctx, canvas);
-  drawImages(ctx, canvas, () => {
+  await drawImages(ctx, canvas, () => {
     drawText(ctx, name, comment, kanji);
   });
 };
