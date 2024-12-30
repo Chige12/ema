@@ -1,6 +1,6 @@
+import Script from 'next/script';
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
-import Script from 'next/script';
 
 const TITLE = 'デジタル絵馬を作ろう "ema"';
 const DESCRIPTION =
