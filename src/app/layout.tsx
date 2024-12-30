@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     siteName: TITLE,
     images: [
       {
-        url: './images/ogb.png',
+        url: 'https://emaema.netlify.app/images/ogb.png',
       },
     ],
   },
