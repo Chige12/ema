@@ -25,7 +25,7 @@ export default function RootLayout({
         <meta property="og:site_name" content='デジタル絵馬を作ろう "ema"' />
         <meta
           property="og:image"
-          content="https://emaema.netlify.app/images/obp.png"
+          content="https://emaema.netlify.app/images/ogp.png"
         />
         <title>デジタル絵馬を作ろう &quot;ema&quot;</title>
         <meta
