@@ -1,9 +1,6 @@
 import React, { RefObject } from 'react';
 import { useDebounce } from 'react-use';
-import {
-  getFillTexts,
-  prepareFontRendering,
-} from '@/lib/generateEma/imageHelpers';
+import { getFillTexts } from '@/lib/generateEma/imageHelpers';
 import { generateStripesEma } from '@/lib/generateEma/stripes';
 
 type Props = {
