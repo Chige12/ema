@@ -16,23 +16,72 @@ const Results = ({ name, savedImage, setSavedImage }: Props) => {
     link.click();
   };
 
-  const shareImage = async () => {
-    const url = window.location.origin;
-    if (navigator.share) {
-      try {
-        navigator.share({
-          title: '絵馬を作成しました',
-          text: '#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト',
-          url,
-        });
-      } catch {
-        await navigator.clipboard.writeText(url);
+  const copyLink = async () => {
+    try {
+      const url = window.location.origin;
+      if (!navigator.clipboard) {
+        throw new Error('Clipboard API is not supported');
       }
-    } else {
-      // Web Share APIが使えないブラウザの処理
       await navigator.clipboard.writeText(url);
       alert('URLをコピーしました');
+    } catch (err) {
+      console.error(err);
+      alert('URLをコピーできませんでした');
     }
+  };
+
+  const createShareFile = (savedImage: string): File => {
+    const base64Data = savedImage.replace(
+      /^data:image\/(png|jpeg);base64,/,
+      '',
+    );
+    const blob = new Blob(
+      [Uint8Array.from(atob(base64Data), (c) => c.charCodeAt(0))],
+      { type: 'image/png' },
+    );
+    const file = new File([blob], 'image.png', { type: 'image/png' });
+    return file;
+  };
+
+  const shareChallenge1 = async (file: File) => {
+    const data = {
+      files: [file],
+      title: '絵馬を作成しました',
+      text: '#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト',
+      url: window.location.origin,
+    };
+    await navigator.share(data);
+  };
+
+  const shareChallenge2 = async () => {
+    const data = {
+      title: '絵馬を作成しました',
+      text: '#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト',
+      url: window.location.origin,
+    };
+    await navigator.share(data);
+  };
+
+  const shareImage = async () => {
+    if (!savedImage || !navigator.canShare) {
+      console.log(`navigator.canShare: ${navigator.canShare}`);
+      copyLink();
+      return;
+    }
+
+    const file = createShareFile(savedImage);
+
+    await shareChallenge1(file).catch(async () => {
+      await shareChallenge2().catch((err) => {
+        showError(err);
+        copyLink();
+      });
+    });
+  };
+
+  const showError = (err: unknown) => {
+    const error = err instanceof Error ? `${err.name}, ${err.message}` : err;
+    console.error(error);
   };
 
   return (
