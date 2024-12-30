@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
+import Script from 'next/script';
 
 const TITLE = 'デジタル絵馬を作ろう "ema"';
 const DESCRIPTION =
@@ -29,6 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja">
+      <Script src="//kitchen.juicer.cc/?color=651L14/n9aE=" async />
       <body className="bg-white">{children}</body>
     </html>
   );
