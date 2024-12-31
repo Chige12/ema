@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 type Props = {
   name: string;
@@ -7,63 +7,68 @@ type Props = {
   setSavedImage: (image: string | null) => void;
 };
 
+const copyLink = async () => {
+  try {
+    const url = window.location.origin;
+    if (!navigator.clipboard) {
+      throw new Error('Clipboard API is not supported');
+    }
+    await navigator.clipboard.writeText(url);
+    alert('URLをコピーしました');
+  } catch (err) {
+    console.error(err);
+    alert('URLをコピーできませんでした');
+  }
+}
+
+const createShareFile = (savedImage: string): File => {
+  const base64Data = savedImage.replace(
+    /^data:image\/(png|jpeg);base64,/,
+    '',
+  );
+  const blob = new Blob(
+    [Uint8Array.from(atob(base64Data), (c) => c.charCodeAt(0))],
+    { type: 'image/png' },
+  );
+  const file = new File([blob], 'ema.png', { type: 'image/png' });
+  return file;
+};
+
+const shareChallenge1 = async (file: File, comment: string) => {
+  const data = {
+    files: [file],
+    title: '絵馬を作成しました',
+    text: `${comment}\n#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト`,
+    url: window.location.origin,
+  };
+  await navigator.share(data);
+};
+
+const shareChallenge2 = async (comment: string) => {
+  const data = {
+    title: '絵馬を作成しました',
+    text: `${comment}\n#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト`,
+    url: window.location.origin,
+  };
+  await navigator.share(data);
+};
+
+const showError = (err: unknown) => {
+  const error = err instanceof Error ? `${err.name}, ${err.message}` : err;
+  console.error(error);
+};
+
 const Results = ({ name, comment, savedImage, setSavedImage }: Props) => {
-  const saveImage = () => {
+  const saveImage = useCallback(() => {
     if (!savedImage) return;
     const today = new Date().toLocaleDateString('ja-JP');
     const link = document.createElement('a');
     link.href = savedImage;
     link.download = `${today}_${name}.png`;
     link.click();
-  };
+  }, [name, savedImage]);
 
-  const copyLink = async () => {
-    try {
-      const url = window.location.origin;
-      if (!navigator.clipboard) {
-        throw new Error('Clipboard API is not supported');
-      }
-      await navigator.clipboard.writeText(url);
-      alert('URLをコピーしました');
-    } catch (err) {
-      console.error(err);
-      alert('URLをコピーできませんでした');
-    }
-  };
-
-  const createShareFile = (savedImage: string): File => {
-    const base64Data = savedImage.replace(
-      /^data:image\/(png|jpeg);base64,/,
-      '',
-    );
-    const blob = new Blob(
-      [Uint8Array.from(atob(base64Data), (c) => c.charCodeAt(0))],
-      { type: 'image/png' },
-    );
-    const file = new File([blob], 'ema.png', { type: 'image/png' });
-    return file;
-  };
-
-  const shareChallenge1 = async (file: File) => {
-    const data = {
-      files: [file],
-      title: '絵馬を作成しました',
-      text: `${comment}\n#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト`,
-      url: window.location.origin,
-    };
-    await navigator.share(data);
-  };
-
-  const shareChallenge2 = async () => {
-    const data = {
-      title: '絵馬を作成しました',
-      text: `${comment}\n#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト`,
-      url: window.location.origin,
-    };
-    await navigator.share(data);
-  };
-
-  const shareImage = async () => {
+  const shareImage = useCallback(async () => {
     if (!savedImage || !navigator.canShare) {
       console.log(`navigator.canShare: ${navigator.canShare}`);
       copyLink();
@@ -72,18 +77,13 @@ const Results = ({ name, comment, savedImage, setSavedImage }: Props) => {
 
     const file = createShareFile(savedImage);
 
-    await shareChallenge1(file).catch(async () => {
-      await shareChallenge2().catch((err) => {
+    await shareChallenge1(file, comment).catch(async () => {
+      await shareChallenge2(comment).catch((err) => {
         showError(err);
         copyLink();
       });
     });
-  };
-
-  const showError = (err: unknown) => {
-    const error = err instanceof Error ? `${err.name}, ${err.message}` : err;
-    console.error(error);
-  };
+  }, [comment, savedImage]);
 
   return (
     <>
