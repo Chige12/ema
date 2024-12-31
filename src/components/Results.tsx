@@ -34,11 +34,17 @@ const createShareFile = (savedImage: string): File => {
   return file;
 };
 
+const genComment = (comment: string) => `
+${comment}
+#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト
+あなたの願いは？🎍
+`
+
 const shareChallenge1 = async (file: File, comment: string) => {
   const data = {
     files: [file],
     title: '絵馬を作成しました',
-    text: `${comment} #ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト`,
+    text: genComment(comment),
     url: window.location.origin,
   };
   await navigator.share(data);
@@ -47,7 +53,7 @@ const shareChallenge1 = async (file: File, comment: string) => {
 const shareChallenge2 = async (comment: string) => {
   const data = {
     title: '絵馬を作成しました',
-    text: `${comment} #ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト`,
+    text: genComment(comment),
     url: window.location.origin,
   };
   await navigator.share(data);
