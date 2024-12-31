@@ -39,7 +39,7 @@ const Results = ({ name, savedImage, setSavedImage }: Props) => {
       [Uint8Array.from(atob(base64Data), (c) => c.charCodeAt(0))],
       { type: 'image/png' },
     );
-    const file = new File([blob], 'image.png', { type: 'image/png' });
+    const file = new File([blob], 'ema.png', { type: 'image/png' });
     return file;
   };
 
