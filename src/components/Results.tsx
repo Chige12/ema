@@ -19,13 +19,10 @@ const copyLink = async () => {
     console.error(err);
     alert('URLをコピーできませんでした');
   }
-}
+};
 
 const createShareFile = (savedImage: string): File => {
-  const base64Data = savedImage.replace(
-    /^data:image\/(png|jpeg);base64,/,
-    '',
-  );
+  const base64Data = savedImage.replace(/^data:image\/(png|jpeg);base64,/, '');
   const blob = new Blob(
     [Uint8Array.from(atob(base64Data), (c) => c.charCodeAt(0))],
     { type: 'image/png' },
@@ -38,7 +35,7 @@ const genComment = (comment: string) => `
 ${comment}
 #ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト
 あなたの願いは？🎍
-`
+`;
 
 const shareChallenge1 = async (file: File, comment: string) => {
   const data = {
