@@ -1,8 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { EmaContext } from '@/contexts/emaContext';
 import {
   fetchEmaListFromApi,
-  fetchEmaListFromCache,
   saveEmaListToCache,
+  sortEma,
 } from '@/lib/emaListHelpers';
 import { FETCH_COUNT, MAX_FETCH_COUNT } from '@/lib/generateEma/constants';
 import { resizeAndCompressImage } from '@/lib/generateEma/imageHelpers';
@@ -18,7 +19,7 @@ const generateBase64Image = (
 };
 
 export const useForm = (
-  fetchEmaList: () => void,
+  addEma: (ema: Ema) => void,
   setSavedImage: React.Dispatch<React.SetStateAction<string | null>>,
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
 ) => {
@@ -38,16 +39,19 @@ export const useForm = (
         const base64 = generateBase64Image(canvasRef);
         const resizedBase64 = await resizeAndCompressImage(base64);
 
+        const ema = {
+          name,
+          comment,
+          base64: resizedBase64,
+          timestamp: Date.now(),
+          kanji,
+          mail,
+        };
+
         const response = await fetch('/api/submit-form', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            name,
-            comment,
-            base64: resizedBase64,
-            kanji,
-            mail,
-          }),
+          body: JSON.stringify(ema),
         });
 
         const result = await response.json();
@@ -57,7 +61,7 @@ export const useForm = (
           setComment('');
           setKanji('');
           setMail('');
-          fetchEmaList(); // 更新された絵馬一覧を取得
+          addEma(ema); // 更新された絵馬一覧を取得
         } else {
           console.error('Failed to submit comment');
         }
@@ -67,8 +71,9 @@ export const useForm = (
         setLoading(false);
       }
     },
-    [name, comment, kanji, mail, canvasRef, fetchEmaList, setSavedImage],
+    [name, comment, kanji, mail, setSavedImage, addEma],
   );
+
   return {
     name,
     comment,
@@ -94,43 +99,25 @@ const createAndSetNewEmaList = (
     ).flatMap(
       (timestamp) => newList.find((ema) => ema.timestamp === timestamp) || [],
     );
-    uniqueList.sort(
-      (a, b) =>
-        new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
-    );
-    saveEmaListToCache(uniqueList);
+    saveEmaListToCache(sortEma(uniqueList));
     return uniqueList;
   });
 };
 
 export const useEmaList = () => {
-  const [emaList, setEmaList] = useState<Ema[]>([]);
   const [loadingEmaList, setLoadingEmaList] = useState(true);
+  const { emaList, setEmaList, addEma } = useContext(EmaContext);
 
   // 絵馬一覧を取得
   const fetchEmaList = useCallback(async () => {
-    const cachedData = fetchEmaListFromCache();
-    if (cachedData.length > 0) {
-      setEmaList(cachedData);
-      setLoadingEmaList(false);
-    }
-
-    let loadedCount = cachedData.length;
-    if (loadedCount >= MAX_FETCH_COUNT) {
-      setLoadingEmaList(false);
-      return;
-    }
-
     for (let i = 0; i < MAX_FETCH_COUNT; i += FETCH_COUNT) {
-      if (loadedCount >= MAX_FETCH_COUNT) break;
       const fetchedEmaList: Ema[] = await fetchEmaListFromApi(i, FETCH_COUNT);
-      loadedCount += FETCH_COUNT;
       if (fetchedEmaList.length === 0) break;
       createAndSetNewEmaList(fetchedEmaList, setEmaList);
     }
 
     setLoadingEmaList(false);
-  }, []);
+  }, [setEmaList]);
 
   useEffect(() => {
     fetchEmaList();
@@ -139,6 +126,7 @@ export const useEmaList = () => {
   return {
     emaList,
     fetchEmaList,
+    addEma,
     loadingEmaList,
   };
 };

@@ -1,4 +1,5 @@
 import Script from 'next/script';
+import { TaskListProvider } from '@/contexts/emaContext';
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
 
@@ -31,7 +32,9 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <Script src="//kitchen.juicer.cc/?color=651L14/n9aE=" async />
-      <body className="bg-white">{children}</body>
+      <body className="bg-white">
+        <TaskListProvider>{children}</TaskListProvider>
+      </body>
     </html>
   );
 }

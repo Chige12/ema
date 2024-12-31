@@ -11,7 +11,7 @@ import { useEmaList, useForm } from './home.hooks';
 export default function Home() {
   const canvasRef = React.useRef<HTMLCanvasElement>(null);
 
-  const { fetchEmaList } = useEmaList();
+  const { addEma } = useEmaList();
   const [savedImage, setSavedImage] = React.useState<string | null>(null);
   const {
     name,
@@ -24,7 +24,7 @@ export default function Home() {
     setMail,
     loading,
     handleSubmit,
-  } = useForm(fetchEmaList, setSavedImage, canvasRef);
+  } = useForm(addEma, setSavedImage, canvasRef);
 
   return (
     <div>

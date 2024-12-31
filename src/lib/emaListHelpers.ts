@@ -31,3 +31,9 @@ export const saveEmaListToCache = (emaList: Ema[]) => {
   if (!localStorage) return;
   localStorage.setItem('emaList', JSON.stringify(emaList));
 };
+
+export const sortEma = (emaList: Ema[]) => {
+  return emaList.sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime(),
+  );
+};
