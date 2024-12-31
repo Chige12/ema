@@ -55,6 +55,7 @@ export default function Home() {
         </div>
         <Results
           name={name}
+          comment={comment}
           savedImage={savedImage}
           setSavedImage={setSavedImage}
         />

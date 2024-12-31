@@ -2,11 +2,12 @@ import React from 'react';
 
 type Props = {
   name: string;
+  comment: string;
   savedImage: string | null;
   setSavedImage: (image: string | null) => void;
 };
 
-const Results = ({ name, savedImage, setSavedImage }: Props) => {
+const Results = ({ name, comment, savedImage, setSavedImage }: Props) => {
   const saveImage = () => {
     if (!savedImage) return;
     const today = new Date().toLocaleDateString('ja-JP');
@@ -47,7 +48,7 @@ const Results = ({ name, savedImage, setSavedImage }: Props) => {
     const data = {
       files: [file],
       title: '絵馬を作成しました',
-      text: '#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト',
+      text: `${comment}\n#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト`,
       url: window.location.origin,
     };
     await navigator.share(data);
@@ -56,7 +57,7 @@ const Results = ({ name, savedImage, setSavedImage }: Props) => {
   const shareChallenge2 = async () => {
     const data = {
       title: '絵馬を作成しました',
-      text: '#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト',
+      text: `${comment}\n#ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト`,
       url: window.location.origin,
     };
     await navigator.share(data);
