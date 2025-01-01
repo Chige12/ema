@@ -35,6 +35,7 @@ const genComment = (comment: string) => `
 ${comment}
 #ema_2025 #2025年の抱負 #100個の夢を叶えようプロジェクト
 あなたの願いは？🎍
+${window.location.origin}
 `;
 
 const shareChallenge1 = async (file: File, comment: string) => {
