@@ -2,6 +2,7 @@ import React, { RefObject } from 'react';
 import { useDebounce } from 'react-use';
 import { getFillTexts } from '@/lib/generateEma/imageHelpers';
 import { generateStripesEma } from '@/lib/generateEma/stripes';
+import { hinaMincho, ysabeauSC } from '@/lib/generateEma/fonts';
 
 type Props = {
   name: string;
@@ -30,6 +31,11 @@ const Preview = ({ name, comment, kanji, canvasRef }: Props) => {
 
   return (
     <div className="flex justify-center items-center mx-16">
+      <div className='fixed pointer-events-none opacity-0'>
+        <small className={hinaMincho.variable}>{name}</small>
+        <small className={hinaMincho.variable}>{comment}</small>
+        <small className={ysabeauSC.variable}>{kanji}</small>
+      </div>
       <canvas
         ref={canvasRef}
         id="canvas"
