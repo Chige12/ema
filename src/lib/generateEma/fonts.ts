@@ -4,19 +4,19 @@ export const hinaMincho = Hina_Mincho({
   subsets: ['latin'],
   weight: '400',
   display: 'swap',
-  variable: "--font-hinaMincho",
+  variable: '--font-hinaMincho',
 });
 
 export const sawarabiMincho = Sawarabi_Mincho({
   subsets: ['latin'],
   weight: '400',
   display: 'swap',
-  variable: "--font-sawarabiMincho",
+  variable: '--font-sawarabiMincho',
 });
 
 export const ysabeauSC = Ysabeau_SC({
   subsets: ['latin'],
   weight: '400',
   display: 'swap',
-  variable: "--font-ysabeauSC",
+  variable: '--font-ysabeauSC',
 });
