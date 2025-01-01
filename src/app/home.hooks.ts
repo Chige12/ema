@@ -57,10 +57,6 @@ export const useForm = (
         const result = await response.json();
         if (result.success) {
           setSavedImage(base64);
-          setName('');
-          setComment('');
-          setKanji('');
-          setMail('');
           addEma(ema); // 更新された絵馬一覧を取得
         } else {
           console.error('Failed to submit comment');
