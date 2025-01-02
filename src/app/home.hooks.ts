@@ -7,7 +7,7 @@ import {
 } from '@/lib/emaListHelpers';
 import { FETCH_COUNT, MAX_FETCH_COUNT } from '@/lib/generateEma/constants';
 import { resizeAndCompressImage } from '@/lib/imageHelpers';
-import { Ema } from '@/types/ema';
+import { Ema, EMA_DESIGNS, EmaDesignIds } from '@/types/ema';
 
 const generateBase64Image = (
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
@@ -27,6 +27,7 @@ export const useForm = (
   const [comment, setComment] = useState('');
   const [kanji, setKanji] = useState('');
   const [mail, setMail] = useState('');
+  const [designId, setDesignId] = useState<EmaDesignIds>(EMA_DESIGNS.STRIPES);
   const [loading, setLoading] = useState(false);
 
   // フォーム送信
@@ -46,6 +47,7 @@ export const useForm = (
           timestamp: Date.now(),
           kanji,
           mail,
+          designId,
         };
 
         const response = await fetch('/api/submit-form', {
