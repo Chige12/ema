@@ -23,9 +23,9 @@ export default {
         asanoha: "url('/images/asanoha.svg')",
       },
       fontFamily: {
-        hinaMincho: ["var(--font-hinaMincho)"],
-        sawarabiMincho: ["var(--font-sawarabiMincho)"],
-        ysabeauSC: ["var(--font-ysabeauSC)"],
+        hinaMincho: ['var(--font-hinaMincho)'],
+        sawarabiMincho: ['var(--font-sawarabiMincho)'],
+        ysabeauSC: ['var(--font-ysabeauSC)'],
       },
     },
   },

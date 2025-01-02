@@ -11,7 +11,7 @@ function createData(sheet, timestamp, data) {
     throw new Error("Missing required fields: name or comment");
   }
 
-  sheet.appendRow([data.name, data.comment, data.kanji, timestamp, data.base64, data.mail]);
+  sheet.appendRow([data.name, data.comment, data.kanji, timestamp, data.base64, data.mail, data.designId]);
   return ContentService.createTextOutput(
     JSON.stringify({ success: true })
   ).setMimeType(ContentService.MimeType.JSON);
@@ -30,6 +30,7 @@ function readData(sheet) {
     timestamp: row[3], // 4行目: タイムスタンプ
     base64: row[4], // 5行目: 画像データ
     mail: row[5], // 6行目: メールアドレス
+    designId: row[6], // 7行目: デザインID
   }));
 
   return ContentService.createTextOutput(
@@ -52,6 +53,7 @@ function readDataRange(sheet, start, count) {
     timestamp: row[3], // 4行目: タイムスタンプ
     base64: row[4], // 5行目: 画像データ
     mail: row[5], // 6行目: メールアドレス
+    designId: row[6], // 7行目: デザインID
   }));
 
   return ContentService.createTextOutput(
