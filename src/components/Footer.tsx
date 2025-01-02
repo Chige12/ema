@@ -9,7 +9,7 @@ const Footer = () => {
         </div>
         <div className="flex justify-center items-center gap-2">
           <a
-            href="https://x.com/ematokyo_"
+            href="https://x.com/ema_wo_dx"
             target="_blank"
             rel="noreferrer"
             className="mx-2 p-4 bg-white rounded-full"
