@@ -106,14 +106,14 @@ export const useEmaList = () => {
 
   // 絵馬一覧を取得
   const fetchEmaList = useCallback(async () => {
-    for (let i = 0; i < MAX_FETCH_COUNT; i += FETCH_COUNT) {
-      const fetchedEmaList: Ema[] = await fetchEmaListFromApi(i, FETCH_COUNT);
-      if (fetchedEmaList.length === 0) break;
-      createAndSetNewEmaList(fetchedEmaList, setEmaList);
+    if (emaList.length >= MAX_FETCH_COUNT) {
+      setLoadingEmaList(false);
+      return;
     }
-
-    setLoadingEmaList(false);
-  }, [setEmaList]);
+    const fetchedEmaList: Ema[] = await fetchEmaListFromApi(emaList.length, FETCH_COUNT);
+    if (fetchedEmaList.length === 0) return;
+    createAndSetNewEmaList(fetchedEmaList, setEmaList);
+  }, [emaList, setEmaList]);
 
   useEffect(() => {
     fetchEmaList();

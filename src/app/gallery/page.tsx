@@ -14,10 +14,9 @@ export default function Gallery() {
       <Tabs />
       <main className="min-h-screen bg-primary-200 bg-asanoha bg-repeat bg-center bg-[length:80px]">
         <div className="max-w-3xl mx-auto p-6">
-          {loadingEmaList ? (
-            <p className="text-primary-600 text-center">絵馬を読み込み中。</p>
-          ) : (
-            <EmaList emaList={emaList} />
+          {emaList.length > 0 && (<EmaList emaList={emaList} />)}
+          {loadingEmaList && (
+            <p className="my-8 text-primary-600 text-center">絵馬を読み込み中。</p>
           )}
         </div>
         <Footer />
