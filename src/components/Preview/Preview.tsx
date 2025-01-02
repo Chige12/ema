@@ -1,41 +1,28 @@
 import React, { RefObject } from 'react';
-import { useDebounce } from 'react-use';
-import { hinaMincho, ysabeauSC } from '@/lib/generateEma/fonts';
-import { getFillTexts } from '@/lib/generateEma/imageHelpers';
-import { generateStripesEma } from '@/lib/generateEma/stripes';
+import { PreviewStripes } from './PreviewStripes/PreviewStripes';
 
 type Props = {
   name: string;
   comment: string;
   kanji: string;
+  designId: string;
   canvasRef: RefObject<HTMLCanvasElement | null>;
 };
 
-const Preview = ({ name, comment, kanji, canvasRef }: Props) => {
-  useDebounce(
-    () => {
-      const loadFontsAndGenerateImage = async () => {
-        const { fillName, fillComment, fillKanji } = getFillTexts(
-          name,
-          comment,
-          kanji,
-        );
-        generateStripesEma(canvasRef, fillName, fillComment, fillKanji);
-      };
-
-      loadFontsAndGenerateImage();
-    },
-    500,
-    [name, comment, kanji, canvasRef],
-  );
+const Preview = ({ name, comment, kanji, designId, canvasRef }: Props) => {
+  const renderPreview = () => {
+    const props = { name, comment, kanji, canvasRef };
+    switch (designId) {
+      case 'stripes':
+        return <PreviewStripes props={props} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="flex justify-center items-center mx-16">
-      <div className="fixed pointer-events-none opacity-0">
-        <small className={hinaMincho.variable}>{name}</small>
-        <small className={hinaMincho.variable}>{comment}</small>
-        <small className={ysabeauSC.variable}>{kanji}</small>
-      </div>
+      {renderPreview()}
       <canvas
         ref={canvasRef}
         id="canvas"

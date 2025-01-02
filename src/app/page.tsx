@@ -38,6 +38,7 @@ export default function Home() {
             name={name}
             comment={comment}
             kanji={kanji}
+            designId="stripes"
             canvasRef={canvasRef}
           />
           <Form

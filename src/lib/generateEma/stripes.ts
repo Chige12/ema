@@ -1,18 +1,9 @@
-import { RefObject } from 'react';
 import { CENTER, INNER_SIZE, LEFT, RIGHT, TOP } from './constants';
 import { hinaMincho, sawarabiMincho, ysabeauSC } from './fonts';
-import { prepareFontRendering } from './imageHelpers';
 
 const CIRCLE_SIZE = 696;
 const CIRCLE_RADIUS = CIRCLE_SIZE / 2;
 const CIRCLE_TOP = CENTER - CIRCLE_RADIUS;
-
-const clearCanvas = (
-  ctx: CanvasRenderingContext2D,
-  canvas: HTMLCanvasElement,
-) => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-};
 
 const drawBackground = (
   ctx: CanvasRenderingContext2D,
@@ -50,7 +41,39 @@ const drawImages = async (
   }
 };
 
-const drawText = (
+const wrapText = (
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  maxWidth: number,
+  lineHeight: number,
+) => {
+  const lines = text.split('\n');
+  const lineArray = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = '';
+    const words = lines[i].split('');
+    for (let n = 0; n < words.length; n++) {
+      const testLine = line + words[n];
+      const testWidth = ctx.measureText(testLine).width;
+      if (testWidth > maxWidth && line !== '') {
+        lineArray.push(line);
+        line = words[n];
+      } else {
+        line = testLine;
+      }
+    }
+    lineArray.push(line);
+  }
+
+  for (let k = 0; k < lineArray.length; k++) {
+    ctx.fillText(lineArray[k], x, y + k * lineHeight);
+  }
+};
+
+export const drawStripesText = (
   ctx: CanvasRenderingContext2D,
   name: string,
   comment: string,
@@ -91,54 +114,15 @@ const drawText = (
   ctx.restore();
 };
 
-const wrapText = (
+export const drawStripesEma = async (
+  canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
-  text: string,
-  x: number,
-  y: number,
-  maxWidth: number,
-  lineHeight: number,
-) => {
-  const lines = text.split('\n');
-  const lineArray = [];
-
-  for (let i = 0; i < lines.length; i++) {
-    let line = '';
-    const words = lines[i].split('');
-    for (let n = 0; n < words.length; n++) {
-      const testLine = line + words[n];
-      const testWidth = ctx.measureText(testLine).width;
-      if (testWidth > maxWidth && line !== '') {
-        lineArray.push(line);
-        line = words[n];
-      } else {
-        line = testLine;
-      }
-    }
-    lineArray.push(line);
-  }
-
-  for (let k = 0; k < lineArray.length; k++) {
-    ctx.fillText(lineArray[k], x, y + k * lineHeight);
-  }
-};
-
-export const generateStripesEma = async (
-  canvasRef: RefObject<HTMLCanvasElement | null>,
   name: string,
   comment: string,
   kanji: string,
 ) => {
-  await prepareFontRendering(name, comment, kanji, 1080, drawText);
-  await new Promise((resolve) => setTimeout(resolve, 100));
-  await document.fonts.ready;
-  const canvas = canvasRef.current;
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  clearCanvas(ctx, canvas);
   drawBackground(ctx, canvas);
   await drawImages(ctx, canvas, () => {
-    drawText(ctx, name, comment, kanji);
+    drawStripesText(ctx, name, comment, kanji);
   });
 };
