@@ -110,7 +110,10 @@ export const useEmaList = () => {
       setLoadingEmaList(false);
       return;
     }
-    const fetchedEmaList: Ema[] = await fetchEmaListFromApi(emaList.length, FETCH_COUNT);
+    const fetchedEmaList: Ema[] = await fetchEmaListFromApi(
+      emaList.length,
+      FETCH_COUNT,
+    );
     if (fetchedEmaList.length === 0) return;
     createAndSetNewEmaList(fetchedEmaList, setEmaList);
   }, [emaList, setEmaList]);
