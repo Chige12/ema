@@ -22,7 +22,7 @@ function createData(sheet, timestamp, data) {
  * @param {GoogleAppsScript.Spreadsheet.Sheet} sheet スプレッドシート
  */
 function readData(sheet) {
-  const rows = sheet.getDataRange().getValues();
+  const rows = sheet.getDataRange().getValues().reverse(); // データを反転
   const data = rows.map((row) => ({
     name: row[0], // 1列目: 名前
     comment: row[1], // 2列目: コメント
@@ -44,7 +44,7 @@ function readData(sheet) {
  * @param {number} count 取得する行数
  */
 function readDataRange(sheet, start, count) {
-  const rows = sheet.getDataRange().getValues();
+  const rows = sheet.getDataRange().getValues().reverse(); // データを反転
   const data = rows.slice(start, start + count).map((row) => ({
     name: row[0], // 1列目: 名前
     comment: row[1], // 2列目: コメント
