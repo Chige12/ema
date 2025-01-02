@@ -69,7 +69,7 @@ export const useForm = (
         setLoading(false);
       }
     },
-    [name, comment, kanji, mail, setSavedImage, addEma],
+    [canvasRef, name, comment, kanji, mail, designId, setSavedImage, addEma],
   );
 
   return {
@@ -77,10 +77,12 @@ export const useForm = (
     comment,
     kanji,
     mail,
+    designId,
     setName,
     setComment,
     setKanji,
     setMail,
+    setDesignId,
     loading,
     handleSubmit,
   };

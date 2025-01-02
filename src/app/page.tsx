@@ -18,10 +18,12 @@ export default function Home() {
     comment,
     kanji,
     mail,
+    designId,
     setName,
     setComment,
     setKanji,
     setMail,
+    setDesignId,
     loading,
     handleSubmit,
   } = useForm(addEma, setSavedImage, canvasRef);
@@ -38,8 +40,9 @@ export default function Home() {
             name={name}
             comment={comment}
             kanji={kanji}
-            designId="stripes"
+            designId={designId}
             canvasRef={canvasRef}
+            setDesignId={setDesignId}
           />
           <Form
             name={name}
