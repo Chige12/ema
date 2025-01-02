@@ -6,7 +6,7 @@ import {
   sortEma,
 } from '@/lib/emaListHelpers';
 import { FETCH_COUNT, MAX_FETCH_COUNT } from '@/lib/generateEma/constants';
-import { resizeAndCompressImage } from '@/lib/generateEma/imageHelpers';
+import { resizeAndCompressImage } from '@/lib/imageHelpers';
 import { Ema } from '@/types/ema';
 
 const generateBase64Image = (

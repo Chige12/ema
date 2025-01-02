@@ -1,5 +1,3 @@
-import { DEFAULT_COMMENT, DEFAULT_KANJI, DEFAULT_NAME } from './constants';
-
 /**
  * base64画像を600x600にダウンサイズし、さらに画像圧縮して容量を減らす関数
  * @param {string} base64 - 入力のbase64画像
@@ -47,39 +45,4 @@ export const resizeAndCompressImage = async (
     };
     img.onerror = (error) => reject(error);
   });
-};
-
-export const prepareFontRendering = async (
-  name: string,
-  comment: string,
-  kanji: string,
-  size: number,
-  drawText: (
-    ctx: CanvasRenderingContext2D,
-    name: string,
-    comment: string,
-    kanji: string,
-  ) => void,
-) => {
-  await document.fonts.ready;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  drawText(ctx, name, comment, kanji);
-};
-
-export const getFillTexts = (
-  name: string,
-  comment: string,
-  kanji: string,
-): { fillName: string; fillComment: string; fillKanji: string } => {
-  let fillName = name,
-    fillComment = comment,
-    fillKanji = kanji;
-  if (!name) fillName = DEFAULT_NAME;
-  if (!comment) fillComment = DEFAULT_COMMENT;
-  if (!kanji) fillKanji = DEFAULT_KANJI;
-  return { fillName, fillComment, fillKanji };
 };
