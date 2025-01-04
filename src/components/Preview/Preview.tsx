@@ -1,6 +1,7 @@
 import React, { RefObject } from 'react';
 import { EMA_DESIGNS, EmaDesignIds } from '@/types/ema';
 import { PreviewStripes } from './PreviewStripes/PreviewStripes';
+import { DIRECTION, Switcher } from './Switcher/Switcher';
 
 type Props = {
   name: string;
@@ -23,7 +24,7 @@ const Preview = ({ name, comment, kanji, designId, canvasRef }: Props) => {
   };
 
   return (
-    <div className="flex justify-center items-center mx-16">
+    <div className="relative flex justify-center items-center px-16">
       {renderPreview()}
       <canvas
         ref={canvasRef}
@@ -32,6 +33,14 @@ const Preview = ({ name, comment, kanji, designId, canvasRef }: Props) => {
         height="1080"
         className="max-w-full h-auto rounded-md shadow-md bg-primary-300"
       ></canvas>
+      <Switcher
+        onClick={() => console.log('switch')}
+        direction={DIRECTION.LEFT}
+      />
+      <Switcher
+        onClick={() => console.log('switch')}
+        direction={DIRECTION.RIGHT}
+      />
     </div>
   );
 };
