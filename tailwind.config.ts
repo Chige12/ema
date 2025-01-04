@@ -1,3 +1,4 @@
+import { stick } from '@/lib/generateEma/fonts';
 import type { Config } from 'tailwindcss';
 
 export default {
@@ -26,6 +27,7 @@ export default {
         hinaMincho: ['var(--font-hinaMincho)'],
         sawarabiMincho: ['var(--font-sawarabiMincho)'],
         ysabeauSC: ['var(--font-ysabeauSC)'],
+        stick: ['var(--font-stick)'],
       },
     },
   },

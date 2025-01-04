@@ -1,6 +1,7 @@
 import React, { RefObject } from 'react';
 import { EMA_DESIGNS, EMA_DESIGNS_LIST, EmaDesignIds } from '@/types/ema';
 import { PreviewStripes } from './PreviewStripes/PreviewStripes';
+import { PreviewBalloon } from './PreviewBalloon/PreviewBalloon';
 import { DIRECTION, Switcher } from './Switcher/Switcher';
 
 type Props = {
@@ -18,6 +19,8 @@ const Preview = ({ name, comment, kanji, designId, canvasRef, setDesignId }: Pro
     switch (designId) {
       case EMA_DESIGNS.STRIPES:
         return <PreviewStripes props={props} />;
+      case EMA_DESIGNS.BALLOON:
+        return <PreviewBalloon props={props} />;
       default:
         return null;
     }

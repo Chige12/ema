@@ -1,5 +1,5 @@
-import { CENTER, INNER_SIZE, LEFT, RIGHT, TOP } from './constants';
-import { hinaMincho, sawarabiMincho, ysabeauSC } from './fonts';
+import { CENTER, INNER_SIZE, LEFT, RIGHT, TOP } from '../constants';
+import { hinaMincho, sawarabiMincho, ysabeauSC } from '../fonts';
 
 const CIRCLE_SIZE = 696;
 const CIRCLE_RADIUS = CIRCLE_SIZE / 2;

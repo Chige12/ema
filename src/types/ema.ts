@@ -1,6 +1,6 @@
 export const EMA_DESIGNS = {
   STRIPES: 'stripes',
-  FLOWERS: 'flowers',
+  BALLOON: 'balloon',
 } as const;
 
 export const EMA_DESIGNS_LIST = Object.values(EMA_DESIGNS);

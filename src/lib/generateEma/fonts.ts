@@ -1,4 +1,4 @@
-import { Hina_Mincho, Sawarabi_Mincho, Ysabeau_SC } from 'next/font/google';
+import { Hina_Mincho, Sawarabi_Mincho, Stick, Ysabeau_SC } from 'next/font/google';
 
 export const hinaMincho = Hina_Mincho({
   subsets: ['latin'],
@@ -20,3 +20,10 @@ export const ysabeauSC = Ysabeau_SC({
   display: 'swap',
   variable: '--font-ysabeauSC',
 });
+
+export const stick = Stick({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-stick',
+})
