@@ -3,6 +3,7 @@ import { EMA_DESIGNS, EMA_DESIGNS_LIST, EmaDesignIds } from '@/types/ema';
 import { PreviewStripes } from './designs/PreviewStripes';
 import { PreviewBalloon } from './designs/PreviewBalloon';
 import { DIRECTION, Switcher } from './Switcher/Switcher';
+import { PreviewTimeline } from './designs/PreviewTimeline';
 
 type Props = {
   name: string;
@@ -21,6 +22,8 @@ const Preview = ({ name, comment, kanji, designId, canvasRef, setDesignId }: Pro
         return <PreviewStripes props={props} />;
       case EMA_DESIGNS.BALLOON:
         return <PreviewBalloon props={props} />;
+      case EMA_DESIGNS.TIMELINE:
+        return <PreviewTimeline props={props} />;
       default:
         return null;
     }

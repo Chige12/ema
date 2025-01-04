@@ -1,4 +1,4 @@
-import { Hina_Mincho, Sawarabi_Mincho, Stick, Ysabeau_SC } from 'next/font/google';
+import { Dela_Gothic_One, Hina_Mincho, Sawarabi_Mincho, Stick, Ysabeau_SC } from 'next/font/google';
 
 export const hinaMincho = Hina_Mincho({
   subsets: ['latin'],
@@ -27,3 +27,10 @@ export const stick = Stick({
   display: 'swap',
   variable: '--font-stick',
 })
+
+export const DelaGothicOne = Dela_Gothic_One({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-delaGothicOne',
+});

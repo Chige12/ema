@@ -28,6 +28,7 @@ export default {
         sawarabiMincho: ['var(--font-sawarabiMincho)'],
         ysabeauSC: ['var(--font-ysabeauSC)'],
         stick: ['var(--font-stick)'],
+        delaGothicOne: ['var(--font-delaGothicOne)'],
       },
     },
   },
