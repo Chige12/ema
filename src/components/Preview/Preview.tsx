@@ -1,7 +1,7 @@
 import React, { RefObject } from 'react';
 import { EMA_DESIGNS, EMA_DESIGNS_LIST, EmaDesignIds } from '@/types/ema';
-import { PreviewStripes } from './PreviewStripes/PreviewStripes';
-import { PreviewBalloon } from './PreviewBalloon/PreviewBalloon';
+import { PreviewStripes } from './designs/PreviewStripes';
+import { PreviewBalloon } from './designs/PreviewBalloon';
 import { DIRECTION, Switcher } from './Switcher/Switcher';
 
 type Props = {
