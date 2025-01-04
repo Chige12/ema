@@ -1,5 +1,5 @@
 import React, { RefObject } from 'react';
-import { EMA_DESIGNS, EmaDesignIds } from '@/types/ema';
+import { EMA_DESIGNS, EMA_DESIGNS_LIST, EmaDesignIds } from '@/types/ema';
 import { PreviewStripes } from './PreviewStripes/PreviewStripes';
 import { DIRECTION, Switcher } from './Switcher/Switcher';
 
@@ -12,7 +12,7 @@ type Props = {
   setDesignId: (designId: EmaDesignIds) => void;
 };
 
-const Preview = ({ name, comment, kanji, designId, canvasRef }: Props) => {
+const Preview = ({ name, comment, kanji, designId, canvasRef, setDesignId }: Props) => {
   const renderPreview = () => {
     const props = { name, comment, kanji, canvasRef };
     switch (designId) {
@@ -22,6 +22,20 @@ const Preview = ({ name, comment, kanji, designId, canvasRef }: Props) => {
         return null;
     }
   };
+
+  const nextDesign = () => {
+    const currentIndex = EMA_DESIGNS_LIST.indexOf(designId);
+    const nextIndex = (currentIndex + 1) % EMA_DESIGNS_LIST.length;
+    const next = EMA_DESIGNS_LIST[nextIndex];
+    setDesignId(next);
+  }
+
+  const prevDesign = () => {
+    const currentIndex = EMA_DESIGNS_LIST.indexOf(designId);
+    const prevIndex = (currentIndex - 1 + EMA_DESIGNS_LIST.length) % EMA_DESIGNS_LIST.length;
+    const prev = EMA_DESIGNS_LIST[prevIndex];
+    setDesignId(prev);
+  }
 
   return (
     <div className="relative flex justify-center items-center px-16">
@@ -34,11 +48,11 @@ const Preview = ({ name, comment, kanji, designId, canvasRef }: Props) => {
         className="max-w-full h-auto rounded-md shadow-md bg-primary-300"
       ></canvas>
       <Switcher
-        onClick={() => console.log('switch')}
+        onClick={prevDesign}
         direction={DIRECTION.LEFT}
       />
       <Switcher
-        onClick={() => console.log('switch')}
+        onClick={nextDesign}
         direction={DIRECTION.RIGHT}
       />
     </div>
