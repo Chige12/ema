@@ -29,6 +29,7 @@ export default {
         ysabeauSC: ['var(--font-ysabeauSC)'],
         stick: ['var(--font-stick)'],
         delaGothicOne: ['var(--font-delaGothicOne)'],
+        bungeeHairline: ['var(--font-bungeeHairline)'],
       },
     },
   },

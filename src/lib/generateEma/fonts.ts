@@ -1,4 +1,4 @@
-import { Dela_Gothic_One, Hina_Mincho, Sawarabi_Mincho, Stick, Ysabeau_SC } from 'next/font/google';
+import { Bungee_Hairline, Dela_Gothic_One, Hina_Mincho, Sawarabi_Mincho, Stick, Ysabeau_SC } from 'next/font/google';
 
 export const hinaMincho = Hina_Mincho({
   subsets: ['latin'],
@@ -33,4 +33,11 @@ export const DelaGothicOne = Dela_Gothic_One({
   weight: '400',
   display: 'swap',
   variable: '--font-delaGothicOne',
+});
+
+export const BungeeHairline = Bungee_Hairline({
+  subsets: ['latin'],
+  weight: '400',
+  display: 'swap',
+  variable: '--font-bungeeHairline',
 });

@@ -4,6 +4,7 @@ import { PreviewStripes } from './designs/PreviewStripes';
 import { PreviewBalloon } from './designs/PreviewBalloon';
 import { DIRECTION, Switcher } from './Switcher/Switcher';
 import { PreviewTimeline } from './designs/PreviewTimeline';
+import { PreviewStar } from './designs/PreviewStar';
 
 type Props = {
   name: string;
@@ -24,6 +25,8 @@ const Preview = ({ name, comment, kanji, designId, canvasRef, setDesignId }: Pro
         return <PreviewBalloon props={props} />;
       case EMA_DESIGNS.TIMELINE:
         return <PreviewTimeline props={props} />;
+      case EMA_DESIGNS.STAR:
+        return <PreviewStar props={props} />;
       default:
         return null;
     }
