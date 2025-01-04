@@ -43,7 +43,7 @@ const clearCanvas = (
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 };
 
-export const generateStripesEma = async (
+export const generateEma = async (
   canvasRef: RefObject<HTMLCanvasElement | null>,
   name: string,
   comment: string,

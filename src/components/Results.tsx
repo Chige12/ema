@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { IconButton } from './IconButton';
 
 type Props = {
   name: string;
@@ -97,26 +98,25 @@ const Results = ({ name, comment, savedImage, setSavedImage }: Props) => {
             className="bg-transparent w-full h-full"
             style={{ height: 'calc(100vh + 1px)' }}
           >
-            <button
-              onClick={() => setSavedImage(null)}
-              className="fixed top-4 right-4 border-gray-300 rounded-full p-4 bg-primary-500"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M1 1L13 13M13 1L1 13"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
+            <div className="fixed top-4 right-4 w-12 h-12">
+              <IconButton onClick={() => setSavedImage(null)}>
+                <svg
+                  width="14"
+                  height="14"
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M1 1L13 13M13 1L1 13"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </IconButton>
+            </div>
             <div className="max-w-3xl mx-auto p-6 text-center">
               <p className="my-16 font-bold text-primary-500">
                 あなたの願いが叶いますように ✧₊˚

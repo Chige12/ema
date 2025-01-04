@@ -1,12 +1,12 @@
 import React from 'react';
 import { RefObject } from 'react';
 import { useDebounce } from 'react-use';
-import { hinaMincho, ysabeauSC } from '@/lib/generateEma/fonts';
 import {
-  getFillTexts,
-  generateStripesEma,
-} from '@/lib/generateEma/generateEma';
-import { drawStripesEma, drawStripesText } from '@/lib/generateEma/stripes';
+  drawStripesEma,
+  drawStripesText,
+} from '@/lib/generateEma/designs/stripes';
+import { hinaMincho, ysabeauSC } from '@/lib/generateEma/fonts';
+import { getFillTexts, generateEma } from '@/lib/generateEma/generateEma';
 
 type Props = {
   props: {
@@ -27,7 +27,7 @@ const PreviewStripes = ({ props }: Props) => {
           comment,
           kanji,
         );
-        generateStripesEma(
+        generateEma(
           canvasRef,
           fillName,
           fillComment,

@@ -1,9 +1,14 @@
-import { CENTER, INNER_SIZE, LEFT, RIGHT, TOP } from './constants';
-import { hinaMincho, sawarabiMincho, ysabeauSC } from './fonts';
+import { BungeeHairline, hinaMincho } from '../fonts';
 
-const CIRCLE_SIZE = 696;
-const CIRCLE_RADIUS = CIRCLE_SIZE / 2;
-const CIRCLE_TOP = CENTER - CIRCLE_RADIUS;
+// stylized constants
+export const PADDING = 186;
+export const CANVAS_SIZE = 1080;
+export const TOP = PADDING;
+export const LEFT = PADDING;
+export const RIGHT = CANVAS_SIZE - PADDING;
+export const BOTTOM = CANVAS_SIZE - PADDING;
+export const CENTER = CANVAS_SIZE / 2;
+export const INNER_SIZE = CANVAS_SIZE - PADDING * 2;
 
 const drawBackground = (
   ctx: CanvasRenderingContext2D,
@@ -28,13 +33,9 @@ const drawImages = async (
   callback: () => void,
 ) => {
   try {
-    const [stripesImg, circleImg] = await Promise.all([
-      loadImage('./images/stripes/stripe.svg'),
-      loadImage('./images/stripes/gradient_circle.svg'),
-    ]);
+    const [starImg] = await Promise.all([loadImage('./images/star/star.png')]);
 
-    ctx.drawImage(stripesImg, 0, 0, canvas.width, canvas.height);
-    ctx.drawImage(circleImg, CIRCLE_TOP, CIRCLE_TOP, CIRCLE_SIZE, CIRCLE_SIZE);
+    ctx.drawImage(starImg, 0, 0, canvas.width, canvas.height);
     callback();
   } catch (error) {
     console.error('Failed to load images', error);
@@ -73,7 +74,7 @@ const wrapText = (
   }
 };
 
-export const drawStripesText = (
+export const drawStarText = (
   ctx: CanvasRenderingContext2D,
   name: string,
   comment: string,
@@ -88,33 +89,33 @@ export const drawStripesText = (
     day: 'numeric',
   });
   const currentDay = date.toLocaleDateString('en-US', { weekday: 'long' });
+  const fontName = hinaMincho.style.fontFamily.split(',')[0];
   // Date and Day
-  ctx.textAlign = 'left';
-  ctx.font = `38px ${ysabeauSC.style.fontFamily.split(',')[0]}`;
-  ctx.fillText(currentDate, LEFT, TOP + 70);
-  ctx.fillText(currentDay, LEFT, TOP + 70 + 50);
+
+  ctx.textAlign = 'right';
+  ctx.font = `30px ${BungeeHairline.style.fontFamily.split(',')[0]}`;
+  ctx.fillText(currentDate, CANVAS_SIZE, CANVAS_SIZE - 37 - 4);
+  ctx.fillText(currentDay, CANVAS_SIZE, CANVAS_SIZE - 4);
 
   // Comment
-  ctx.font = `38px ${hinaMincho.style.fontFamily.split(',')[0]}`;
-  ctx.textAlign = 'right';
-  wrapText(ctx, comment, RIGHT, 380, INNER_SIZE - 180, 58);
+  ctx.font = `30px ${fontName}`;
+  ctx.textAlign = 'left';
+  wrapText(ctx, comment, LEFT, TOP + 610, INNER_SIZE, 43);
 
   // Kanji 1 word
-  ctx.textAlign = 'left';
-  ctx.font = `230px ${sawarabiMincho.style.fontFamily.split(',')[0]}`;
-  ctx.fillText(kanji, LEFT, 785);
+  ctx.textAlign = 'right';
+  ctx.font = `260px ${fontName}`;
+  ctx.fillText(kanji, RIGHT, TOP + 300);
 
   // Name
-  ctx.font = `38px ${hinaMincho.style.fontFamily.split(',')[0]}`;
-  ctx.textAlign = 'center';
+  ctx.font = `40px ${fontName}`;
+  ctx.textAlign = 'left';
   ctx.save();
-  ctx.translate(780, 920);
-  ctx.rotate((-18.5 * Math.PI) / 180);
-  ctx.fillText(name, 0, 0);
+  ctx.fillText(name, LEFT, TOP + 520);
   ctx.restore();
 };
 
-export const drawStripesEma = async (
+export const drawStarEma = async (
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D,
   name: string,
@@ -123,6 +124,6 @@ export const drawStripesEma = async (
 ) => {
   drawBackground(ctx, canvas);
   await drawImages(ctx, canvas, () => {
-    drawStripesText(ctx, name, comment, kanji);
+    drawStarText(ctx, name, comment, kanji);
   });
 };
