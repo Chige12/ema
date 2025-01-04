@@ -34,7 +34,7 @@ export default function Home() {
       <main className="min-h-screen bg-primary-200 bg-asanoha bg-repeat bg-[length:80px]">
         <div className="max-w-3xl mx-auto p-6">
           <h2 className="text-sm font-bold text-primary-600 mb-4 text-center">
-            絵馬を作る
+            デザインを選ぶ
           </h2>
           <Preview
             name={name}
