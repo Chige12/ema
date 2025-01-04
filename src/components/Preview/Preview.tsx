@@ -1,10 +1,10 @@
 import React, { RefObject } from 'react';
 import { EMA_DESIGNS, EMA_DESIGNS_LIST, EmaDesignIds } from '@/types/ema';
-import { PreviewStripes } from './designs/PreviewStripes';
 import { PreviewBalloon } from './designs/PreviewBalloon';
-import { DIRECTION, Switcher } from './Switcher/Switcher';
-import { PreviewTimeline } from './designs/PreviewTimeline';
 import { PreviewStar } from './designs/PreviewStar';
+import { PreviewStripes } from './designs/PreviewStripes';
+import { PreviewTimeline } from './designs/PreviewTimeline';
+import { DIRECTION, Switcher } from './Switcher/Switcher';
 
 type Props = {
   name: string;
@@ -15,7 +15,14 @@ type Props = {
   setDesignId: (designId: EmaDesignIds) => void;
 };
 
-const Preview = ({ name, comment, kanji, designId, canvasRef, setDesignId }: Props) => {
+const Preview = ({
+  name,
+  comment,
+  kanji,
+  designId,
+  canvasRef,
+  setDesignId,
+}: Props) => {
   const renderPreview = () => {
     const props = { name, comment, kanji, canvasRef };
     switch (designId) {
@@ -37,14 +44,15 @@ const Preview = ({ name, comment, kanji, designId, canvasRef, setDesignId }: Pro
     const nextIndex = (currentIndex + 1) % EMA_DESIGNS_LIST.length;
     const next = EMA_DESIGNS_LIST[nextIndex];
     setDesignId(next);
-  }
+  };
 
   const prevDesign = () => {
     const currentIndex = EMA_DESIGNS_LIST.indexOf(designId);
-    const prevIndex = (currentIndex - 1 + EMA_DESIGNS_LIST.length) % EMA_DESIGNS_LIST.length;
+    const prevIndex =
+      (currentIndex - 1 + EMA_DESIGNS_LIST.length) % EMA_DESIGNS_LIST.length;
     const prev = EMA_DESIGNS_LIST[prevIndex];
     setDesignId(prev);
-  }
+  };
 
   return (
     <div className="relative flex justify-center items-center px-16">
@@ -56,14 +64,8 @@ const Preview = ({ name, comment, kanji, designId, canvasRef, setDesignId }: Pro
         height="1080"
         className="max-w-full h-auto rounded-md shadow-md bg-primary-300"
       ></canvas>
-      <Switcher
-        onClick={prevDesign}
-        direction={DIRECTION.LEFT}
-      />
-      <Switcher
-        onClick={nextDesign}
-        direction={DIRECTION.RIGHT}
-      />
+      <Switcher onClick={prevDesign} direction={DIRECTION.LEFT} />
+      <Switcher onClick={nextDesign} direction={DIRECTION.RIGHT} />
     </div>
   );
 };

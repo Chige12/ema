@@ -1,9 +1,5 @@
-import { BOTTOM, CENTER, INNER_SIZE, LEFT, RIGHT, TOP } from '../constants';
+import { BOTTOM, INNER_SIZE, LEFT, RIGHT, TOP } from '../constants';
 import { DelaGothicOne } from '../fonts';
-
-const CIRCLE_SIZE = 696;
-const CIRCLE_RADIUS = CIRCLE_SIZE / 2;
-const CIRCLE_TOP = CENTER - CIRCLE_RADIUS;
 
 const drawBackground = (
   ctx: CanvasRenderingContext2D,
@@ -84,7 +80,7 @@ export const drawTimelineText = (
     day: 'numeric',
   });
   const currentDay = date.toLocaleDateString('en-US', { weekday: 'long' });
-  const fontName = DelaGothicOne.style.fontFamily.split(',')[0]
+  const fontName = DelaGothicOne.style.fontFamily.split(',')[0];
   // Date and Day
   ctx.fillStyle = '#C5392F';
   ctx.textAlign = 'center';

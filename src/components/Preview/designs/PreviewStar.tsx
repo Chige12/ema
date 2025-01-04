@@ -1,12 +1,9 @@
 import React from 'react';
 import { RefObject } from 'react';
 import { useDebounce } from 'react-use';
-import { stick } from '@/lib/generateEma/fonts';
-import {
-  getFillTexts,
-  generateEma,
-} from '@/lib/generateEma/generateEma';
 import { drawStarEma, drawStarText } from '@/lib/generateEma/designs/star';
+import { stick } from '@/lib/generateEma/fonts';
+import { getFillTexts, generateEma } from '@/lib/generateEma/generateEma';
 
 type Props = {
   props: {

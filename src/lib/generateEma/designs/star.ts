@@ -33,9 +33,7 @@ const drawImages = async (
   callback: () => void,
 ) => {
   try {
-    const [starImg] = await Promise.all([
-      loadImage('./images/star/star.png'),
-    ]);
+    const [starImg] = await Promise.all([loadImage('./images/star/star.png')]);
 
     ctx.drawImage(starImg, 0, 0, canvas.width, canvas.height);
     callback();
@@ -91,9 +89,9 @@ export const drawStarText = (
     day: 'numeric',
   });
   const currentDay = date.toLocaleDateString('en-US', { weekday: 'long' });
-  const fontName = hinaMincho.style.fontFamily.split(',')[0]
+  const fontName = hinaMincho.style.fontFamily.split(',')[0];
   // Date and Day
-  
+
   ctx.textAlign = 'right';
   ctx.font = `30px ${BungeeHairline.style.fontFamily.split(',')[0]}`;
   ctx.fillText(currentDate, CANVAS_SIZE, CANVAS_SIZE - 37 - 4);
